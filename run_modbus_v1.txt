@@ -1,0 +1,832 @@
+2025/04/11 21:21:10 Structured log (JSON) sẽ được ghi tại: logs_go_final\modbus_data_go_20250411_212110.log và hiển thị trên Console (Level: info)
+2025/04/11 21:21:10 Log CSV sẽ được ghi tại: logs_go_final\modbus_data_go_20250411_212110.csv
+2025/04/11 21:21:10 --- Bắt đầu chương trình Modbus Go Client (Kết nối thiết bị thực) ---
+2025/04/11 21:21:10 Sử dụng đường dẫn cổng: \\.\COM3
+2025/04/11 21:21:10 Đang thử kết nối tới COM3...
+2025/04/11 21:21:10 >>> Kết nối thành công!
+
+==================== Lần đọc thứ 1 (21:21:10) ====================
+--- Device Info ---
+Meter_Model                   : "Power Meter "
+------------------------------------------
+--- Manufacturer ---
+Manufacturer                  : "Schneider Electric"
+------------------------------------------
+--- Date/Time ---
+Peak_Demand_Date_time         : "2025-04-11 21:48:00.000"
+------------------------------------------
+--- Energy(Inst) ---
+AE_Delivered                  : 0.0000
+AE_Received                   : 0.0000
+AE_Del_Plus_Rec               : 0.0000
+AE_Del_Minus_Rec              : 0.0000
+RE_Delivered                  : 0.0000
+RE_Received                   : 0.0000
+RE_Del_Plus_Rec               : 0.0000
+RE_Del_Minus_Rec              : 0.0000
+APE_Delivered                 : 0.0000
+APE_Received                  : 0.0000
+APE_Del_Plus_Rec              : 0.0000
+APE_Del_Minus_Rec             : 0.0000
+------------------------------------------
+--- Current ---
+Current_A                     : 0.0000
+Current_B                     : "N/A_FLOAT32"
+Current_C                     : "N/A_FLOAT32"
+Current_N                     : "N/A_FLOAT32"
+Current_G                     : "N/A_FLOAT32"
+Current_Avg                   : 0.0000
+------------------------------------------
+--- Current Unbalance ---
+Current_Unbalance_A           : "N/A_FLOAT32"
+Current_Unbalance_B           : "N/A_FLOAT32"
+Current_Unbalance_C           : "N/A_FLOAT32"
+Current_Unbalance_Worst       : "N/A_FLOAT32"
+------------------------------------------
+--- Voltage ---
+Voltage_AB                    : "N/A_FLOAT32"
+Voltage_BC                    : "N/A_FLOAT32"
+Voltage_CA                    : "N/A_FLOAT32"
+Voltage_LLAvg                 : "N/A_FLOAT32"
+Voltage_AN                    : 233.4240
+Voltage_BN                    : "N/A_FLOAT32"
+Voltage_CN                    : "N/A_FLOAT32"
+Voltage_LNAvg                 : 233.4240
+------------------------------------------
+--- Voltage Unbalance ---
+Voltage_Unbalance_AB          : "N/A_FLOAT32"
+Voltage_Unbalance_BC          : "N/A_FLOAT32"
+Voltage_Unbalance_CA          : "N/A_FLOAT32"
+Voltage_Unbalance_LL_Worst    : "N/A_FLOAT32"
+Voltage_Unbalance_AN          : "N/A_FLOAT32"
+Voltage_Unbalance_BN          : "N/A_FLOAT32"
+Voltage_Unbalance_CN          : "N/A_FLOAT32"
+Voltage_Unbalance_LN_Worst    : "N/A_FLOAT32"
+------------------------------------------
+--- ActivePower ---
+ActivePower_A                 : 0.0000
+ActivePower_B                 : "N/A_FLOAT32"
+ActivePower_C                 : "N/A_FLOAT32"
+ActivePower_Total             : 0.0000
+------------------------------------------
+--- ReactivePower ---
+ReactivePower_A               : 0.0000
+ReactivePower_B               : "N/A_FLOAT32"
+ReactivePower_C               : "N/A_FLOAT32"
+ReactivePower_Total           : 0.0000
+------------------------------------------
+--- ApparentPower ---
+ApparentPower_A               : 0.0000
+ApparentPower_B               : "N/A_FLOAT32"
+ApparentPower_C               : "N/A_FLOAT32"
+ApparentPower_Total           : 0.0000
+------------------------------------------
+--- PowerFactor ---
+PF_A                          : -0.0064
+PF_B                          : -0.0064
+PF_C                          : -0.0064
+PF_Total                      : -0.0064
+DPF_A                         : -0.0064
+DPF_B                         : -0.0064
+DPF_C                         : -0.0064
+DPF_Total                     : -0.0064
+PF_Total_IEC_F32              : 1.0000
+PF_Total_IEEE_F32             : -1.0000
+PF_Total_IEC_I16              : 1000
+PF_Total_IEEE_I16             : -31768
+------------------------------------------
+--- Frequency ---
+Frequency                     : 49.9900
+------------------------------------------
+--- Energy(Accum) ---
+Accum_Energy_Reset_Time       : "2025-04-04 13:06:00.000"
+Accum_AE_Del                  : 0
+Accum_AE_Rec                  : 0
+Accum_AE_Sum                  : 0
+Accum_AE_Net                  : 0
+Accum_RE_Del                  : 0
+Accum_RE_Rec                  : 0
+Accum_RE_Sum                  : 0
+Accum_RE_Net                  : 0
+Accum_APE_Del                 : 0
+Accum_APE_Rec                 : 0
+Accum_APE_Sum                 : 0
+Accum_APE_Net                 : 0
+------------------------------------------
+--- Settings ---
+Pwr_Dem_Interval_Dur          : 15
+Cur_Dem_Interval_Dur          : 15
+RS485_Proto                   : 0
+RS485_Addr                    : 1
+RS485_Baud                    : 2
+RS485_Parity                  : 2
+==================================================================
+{"AE_Del_Minus_Rec":0,"AE_Del_Plus_Rec":0,"AE_Delivered":0,"AE_Received":0,"APE_Del_Minus_Rec":0,"APE_Del_Plus_Rec":0,"APE_Delivered":0,"APE_Received":0,"Accum_AE_Del":0,"Accum_AE_Net":0,"Accum_AE_Rec":0,"Accum_AE_Sum":0,"Accum_APE_Del":0,"Accum_APE_Net":0,"Accum_APE_Rec":0,"Accum_APE_Sum":0,"Accum_Energy_Reset_Time":"2025-04-04 13:06:00.000","Accum_RE_Del":0,"Accum_RE_Net":0,"Accum_RE_Rec":0,"Accum_RE_Sum":0,"ActivePower_A":0,"ActivePower_B":"N/A_FLOAT32","ActivePower_C":"N/A_FLOAT32","ActivePower_Total":0,"ApparentPower_A":0,"ApparentPower_B":"N/A_FLOAT32","ApparentPower_C":"N/A_FLOAT32","ApparentPower_Total":0,"Cur_Dem_Interval_Dur":15,"Current_A":0,"Current_Avg":0,"Current_B":"N/A_FLOAT32","Current_C":"N/A_FLOAT32","Current_G":"N/A_FLOAT32","Current_N":"N/A_FLOAT32","Current_Unbalance_A":"N/A_FLOAT32","Current_Unbalance_B":"N/A_FLOAT32","Current_Unbalance_C":"N/A_FLOAT32","Current_Unbalance_Worst":"N/A_FLOAT32","DPF_A":-0.0064,"DPF_B":-0.0064,"DPF_C":-0.0064,"DPF_Total":-0.0064,"Frequency":49.99,"Manufacturer":"Schneider Electric","Meter_Model":"Power Meter ","PF_A":-0.0064,"PF_B":-0.0064,"PF_C":-0.0064,"PF_Total":-0.0064,"PF_Total_IEC_F32":1,"PF_Total_IEC_I16":1000,"PF_Total_IEEE_F32":-1,"PF_Total_IEEE_I16":-31768,"Peak_Demand_Date_time":"2025-04-11 21:48:00.000","Pwr_Dem_Interval_Dur":15,"RE_Del_Minus_Rec":0,"RE_Del_Plus_Rec":0,"RE_Delivered":0,"RE_Received":0,"RS485_Addr":1,"RS485_Baud":2,"RS485_Parity":2,"RS485_Proto":0,"ReactivePower_A":0,"ReactivePower_B":"N/A_FLOAT32","ReactivePower_C":"N/A_FLOAT32","ReactivePower_Total":0,"Voltage_AB":"N/A_FLOAT32","Voltage_AN":233.424,"Voltage_BC":"N/A_FLOAT32","Voltage_BN":"N/A_FLOAT32","Voltage_CA":"N/A_FLOAT32","Voltage_CN":"N/A_FLOAT32","Voltage_LLAvg":"N/A_FLOAT32","Voltage_LNAvg":233.424,"Voltage_Unbalance_AB":"N/A_FLOAT32","Voltage_Unbalance_AN":"N/A_FLOAT32","Voltage_Unbalance_BC":"N/A_FLOAT32","Voltage_Unbalance_BN":"N/A_FLOAT32","Voltage_Unbalance_CA":"N/A_FLOAT32","Voltage_Unbalance_CN":"N/A_FLOAT32","Voltage_Unbalance_LL_Worst":"N/A_FLOAT32","Voltage_Unbalance_LN_Worst":"N/A_FLOAT32","level":"info","msg":"Modbus Data Read","read_cycle":1,"read_duration_ms":4383,"registers_error":0,"registers_ok":85,"registers_total_attempted":85,"slave_id":1,"time":"2025-04-11T21:21:14.5533835+07:00","timestamp_rfc3339":"2025-04-11T21:21:10.1694278+07:00"}
+
+==================== Lần đọc thứ 2 (21:21:15) ====================
+--- Device Info ---
+Meter_Model                   : "Power Meter "
+------------------------------------------
+--- Manufacturer ---
+Manufacturer                  : "Schneider Electric"
+------------------------------------------
+--- Date/Time ---
+Peak_Demand_Date_time         : "2025-04-11 21:48:00.000"
+------------------------------------------
+--- Energy(Inst) ---
+AE_Delivered                  : 0.0000
+AE_Received                   : 0.0000
+AE_Del_Plus_Rec               : 0.0000
+AE_Del_Minus_Rec              : 0.0000
+RE_Delivered                  : 0.0000
+RE_Received                   : 0.0000
+RE_Del_Plus_Rec               : 0.0000
+RE_Del_Minus_Rec              : 0.0000
+APE_Delivered                 : 0.0000
+APE_Received                  : 0.0000
+APE_Del_Plus_Rec              : 0.0000
+APE_Del_Minus_Rec             : 0.0000
+------------------------------------------
+--- Current ---
+Current_A                     : 0.0800
+Current_B                     : "N/A_FLOAT32"
+Current_C                     : "N/A_FLOAT32"
+Current_N                     : "N/A_FLOAT32"
+Current_G                     : "N/A_FLOAT32"
+Current_Avg                   : 0.0863
+------------------------------------------
+--- Current Unbalance ---
+Current_Unbalance_A           : "N/A_FLOAT32"
+Current_Unbalance_B           : "N/A_FLOAT32"
+Current_Unbalance_C           : "N/A_FLOAT32"
+Current_Unbalance_Worst       : "N/A_FLOAT32"
+------------------------------------------
+--- Voltage ---
+Voltage_AB                    : "N/A_FLOAT32"
+Voltage_BC                    : "N/A_FLOAT32"
+Voltage_CA                    : "N/A_FLOAT32"
+Voltage_LLAvg                 : "N/A_FLOAT32"
+Voltage_AN                    : 233.3691
+Voltage_BN                    : "N/A_FLOAT32"
+Voltage_CN                    : "N/A_FLOAT32"
+Voltage_LNAvg                 : 233.3691
+------------------------------------------
+--- Voltage Unbalance ---
+Voltage_Unbalance_AB          : "N/A_FLOAT32"
+Voltage_Unbalance_BC          : "N/A_FLOAT32"
+Voltage_Unbalance_CA          : "N/A_FLOAT32"
+Voltage_Unbalance_LL_Worst    : "N/A_FLOAT32"
+Voltage_Unbalance_AN          : "N/A_FLOAT32"
+Voltage_Unbalance_BN          : "N/A_FLOAT32"
+Voltage_Unbalance_CN          : "N/A_FLOAT32"
+Voltage_Unbalance_LN_Worst    : "N/A_FLOAT32"
+------------------------------------------
+--- ActivePower ---
+ActivePower_A                 : 0.0159
+ActivePower_B                 : "N/A_FLOAT32"
+ActivePower_C                 : "N/A_FLOAT32"
+ActivePower_Total             : 0.0159
+------------------------------------------
+--- ReactivePower ---
+ReactivePower_A               : 0.0126
+ReactivePower_B               : "N/A_FLOAT32"
+ReactivePower_C               : "N/A_FLOAT32"
+ReactivePower_Total           : 0.0126
+------------------------------------------
+--- ApparentPower ---
+ApparentPower_A               : 0.0203
+ApparentPower_B               : "N/A_FLOAT32"
+ApparentPower_C               : "N/A_FLOAT32"
+ApparentPower_Total           : 0.0203
+------------------------------------------
+--- PowerFactor ---
+PF_A                          : 0.3800
+PF_B                          : -0.0064
+PF_C                          : -0.0064
+PF_Total                      : 0.3800
+DPF_A                         : 0.3792
+DPF_B                         : -0.0064
+DPF_C                         : -0.0064
+DPF_Total                     : 0.3760
+PF_Total_IEC_F32              : 0.7827
+PF_Total_IEEE_F32             : -0.7827
+PF_Total_IEC_I16              : 783
+PF_Total_IEEE_I16             : -31985
+------------------------------------------
+--- Frequency ---
+Frequency                     : 50.0049
+------------------------------------------
+--- Energy(Accum) ---
+Accum_Energy_Reset_Time       : "2025-04-04 13:06:00.000"
+Accum_AE_Del                  : 0
+Accum_AE_Rec                  : 0
+Accum_AE_Sum                  : 0
+Accum_AE_Net                  : 0
+Accum_RE_Del                  : 0
+Accum_RE_Rec                  : 0
+Accum_RE_Sum                  : 0
+Accum_RE_Net                  : 0
+Accum_APE_Del                 : 0
+Accum_APE_Rec                 : 0
+Accum_APE_Sum                 : 0
+Accum_APE_Net                 : 0
+------------------------------------------
+--- Settings ---
+Pwr_Dem_Interval_Dur          : 15
+Cur_Dem_Interval_Dur          : 15
+RS485_Proto                   : 0
+RS485_Addr                    : 1
+RS485_Baud                    : 2
+RS485_Parity                  : 2
+==================================================================
+{"AE_Del_Minus_Rec":0,"AE_Del_Plus_Rec":0,"AE_Delivered":0,"AE_Received":0,"APE_Del_Minus_Rec":0,"APE_Del_Plus_Rec":0,"APE_Delivered":0,"APE_Received":0,"Accum_AE_Del":0,"Accum_AE_Net":0,"Accum_AE_Rec":0,"Accum_AE_Sum":0,"Accum_APE_Del":0,"Accum_APE_Net":0,"Accum_APE_Rec":0,"Accum_APE_Sum":0,"Accum_Energy_Reset_Time":"2025-04-04 13:06:00.000","Accum_RE_Del":0,"Accum_RE_Net":0,"Accum_RE_Rec":0,"Accum_RE_Sum":0,"ActivePower_A":0.0159,"ActivePower_B":"N/A_FLOAT32","ActivePower_C":"N/A_FLOAT32","ActivePower_Total":0.0159,"ApparentPower_A":0.0203,"ApparentPower_B":"N/A_FLOAT32","ApparentPower_C":"N/A_FLOAT32","ApparentPower_Total":0.0203,"Cur_Dem_Interval_Dur":15,"Current_A":0.08,"Current_Avg":0.0863,"Current_B":"N/A_FLOAT32","Current_C":"N/A_FLOAT32","Current_G":"N/A_FLOAT32","Current_N":"N/A_FLOAT32","Current_Unbalance_A":"N/A_FLOAT32","Current_Unbalance_B":"N/A_FLOAT32","Current_Unbalance_C":"N/A_FLOAT32","Current_Unbalance_Worst":"N/A_FLOAT32","DPF_A":0.3792,"DPF_B":-0.0064,"DPF_C":-0.0064,"DPF_Total":0.376,"Frequency":50.0049,"Manufacturer":"Schneider Electric","Meter_Model":"Power Meter ","PF_A":0.38,"PF_B":-0.0064,"PF_C":-0.0064,"PF_Total":0.38,"PF_Total_IEC_F32":0.7827,"PF_Total_IEC_I16":783,"PF_Total_IEEE_F32":-0.7827,"PF_Total_IEEE_I16":-31985,"Peak_Demand_Date_time":"2025-04-11 21:48:00.000","Pwr_Dem_Interval_Dur":15,"RE_Del_Minus_Rec":0,"RE_Del_Plus_Rec":0,"RE_Delivered":0,"RE_Received":0,"RS485_Addr":1,"RS485_Baud":2,"RS485_Parity":2,"RS485_Proto":0,"ReactivePower_A":0.0126,"ReactivePower_B":"N/A_FLOAT32","ReactivePower_C":"N/A_FLOAT32","ReactivePower_Total":0.0126,"Voltage_AB":"N/A_FLOAT32","Voltage_AN":233.3691,"Voltage_BC":"N/A_FLOAT32","Voltage_BN":"N/A_FLOAT32","Voltage_CA":"N/A_FLOAT32","Voltage_CN":"N/A_FLOAT32","Voltage_LLAvg":"N/A_FLOAT32","Voltage_LNAvg":233.3691,"Voltage_Unbalance_AB":"N/A_FLOAT32","Voltage_Unbalance_AN":"N/A_FLOAT32","Voltage_Unbalance_BC":"N/A_FLOAT32","Voltage_Unbalance_BN":"N/A_FLOAT32","Voltage_Unbalance_CA":"N/A_FLOAT32","Voltage_Unbalance_CN":"N/A_FLOAT32","Voltage_Unbalance_LL_Worst":"N/A_FLOAT32","Voltage_Unbalance_LN_Worst":"N/A_FLOAT32","level":"info","msg":"Modbus Data Read","read_cycle":2,"read_duration_ms":4319,"registers_error":0,"registers_ok":85,"registers_total_attempted":85,"slave_id":1,"time":"2025-04-11T21:21:19.9706017+07:00","timestamp_rfc3339":"2025-04-11T21:21:15.650867+07:00"}
+
+==================== Lần đọc thứ 3 (21:21:21) ====================
+--- Device Info ---
+Meter_Model                   : "Power Meter "
+------------------------------------------
+--- Manufacturer ---
+Manufacturer                  : "Schneider Electric"
+------------------------------------------
+--- Date/Time ---
+Peak_Demand_Date_time         : "2025-04-11 21:48:00.000"
+------------------------------------------
+--- Energy(Inst) ---
+AE_Delivered                  : 0.0000
+AE_Received                   : 0.0000
+AE_Del_Plus_Rec               : 0.0000
+AE_Del_Minus_Rec              : 0.0000
+RE_Delivered                  : 0.0000
+RE_Received                   : 0.0000
+RE_Del_Plus_Rec               : 0.0000
+RE_Del_Minus_Rec              : 0.0000
+APE_Delivered                 : 0.0000
+APE_Received                  : 0.0000
+APE_Del_Plus_Rec              : 0.0000
+APE_Del_Minus_Rec             : 0.0000
+------------------------------------------
+--- Current ---
+Current_A                     : 0.0865
+Current_B                     : "N/A_FLOAT32"
+Current_C                     : "N/A_FLOAT32"
+Current_N                     : "N/A_FLOAT32"
+Current_G                     : "N/A_FLOAT32"
+Current_Avg                   : 0.0865
+------------------------------------------
+--- Current Unbalance ---
+Current_Unbalance_A           : "N/A_FLOAT32"
+Current_Unbalance_B           : "N/A_FLOAT32"
+Current_Unbalance_C           : "N/A_FLOAT32"
+Current_Unbalance_Worst       : "N/A_FLOAT32"
+------------------------------------------
+--- Voltage ---
+Voltage_AB                    : "N/A_FLOAT32"
+Voltage_BC                    : "N/A_FLOAT32"
+Voltage_CA                    : "N/A_FLOAT32"
+Voltage_LLAvg                 : "N/A_FLOAT32"
+Voltage_AN                    : 233.4760
+Voltage_BN                    : "N/A_FLOAT32"
+Voltage_CN                    : "N/A_FLOAT32"
+Voltage_LNAvg                 : 233.4760
+------------------------------------------
+--- Voltage Unbalance ---
+Voltage_Unbalance_AB          : "N/A_FLOAT32"
+Voltage_Unbalance_BC          : "N/A_FLOAT32"
+Voltage_Unbalance_CA          : "N/A_FLOAT32"
+Voltage_Unbalance_LL_Worst    : "N/A_FLOAT32"
+Voltage_Unbalance_AN          : "N/A_FLOAT32"
+Voltage_Unbalance_BN          : "N/A_FLOAT32"
+Voltage_Unbalance_CN          : "N/A_FLOAT32"
+Voltage_Unbalance_LN_Worst    : "N/A_FLOAT32"
+------------------------------------------
+--- ActivePower ---
+ActivePower_A                 : 0.0158
+ActivePower_B                 : "N/A_FLOAT32"
+ActivePower_C                 : "N/A_FLOAT32"
+ActivePower_Total             : 0.0158
+------------------------------------------
+--- ReactivePower ---
+ReactivePower_A               : 0.0126
+ReactivePower_B               : "N/A_FLOAT32"
+ReactivePower_C               : "N/A_FLOAT32"
+ReactivePower_Total           : 0.0126
+------------------------------------------
+--- ApparentPower ---
+ApparentPower_A               : 0.0203
+ApparentPower_B               : "N/A_FLOAT32"
+ApparentPower_C               : "N/A_FLOAT32"
+ApparentPower_Total           : 0.0203
+------------------------------------------
+--- PowerFactor ---
+PF_A                          : 0.3800
+PF_B                          : -0.0064
+PF_C                          : -0.0064
+PF_Total                      : 0.3800
+DPF_A                         : 0.3792
+DPF_B                         : -0.0064
+DPF_C                         : -0.0064
+DPF_Total                     : 0.3760
+PF_Total_IEC_F32              : 0.7831
+PF_Total_IEEE_F32             : -0.7831
+PF_Total_IEC_I16              : 783
+PF_Total_IEEE_I16             : -31985
+------------------------------------------
+--- Frequency ---
+Frequency                     : 50.0265
+------------------------------------------
+--- Energy(Accum) ---
+Accum_Energy_Reset_Time       : "2025-04-04 13:06:00.000"
+Accum_AE_Del                  : 0
+Accum_AE_Rec                  : 0
+Accum_AE_Sum                  : 0
+Accum_AE_Net                  : 0
+Accum_RE_Del                  : 0
+Accum_RE_Rec                  : 0
+Accum_RE_Sum                  : 0
+Accum_RE_Net                  : 0
+Accum_APE_Del                 : 0
+Accum_APE_Rec                 : 0
+Accum_APE_Sum                 : 0
+Accum_APE_Net                 : 0
+------------------------------------------
+--- Settings ---
+Pwr_Dem_Interval_Dur          : 15
+Cur_Dem_Interval_Dur          : 15
+RS485_Proto                   : 0
+RS485_Addr                    : 1
+RS485_Baud                    : 2
+RS485_Parity                  : 2
+==================================================================
+{"AE_Del_Minus_Rec":0,"AE_Del_Plus_Rec":0,"AE_Delivered":0,"AE_Received":0,"APE_Del_Minus_Rec":0,"APE_Del_Plus_Rec":0,"APE_Delivered":0,"APE_Received":0,"Accum_AE_Del":0,"Accum_AE_Net":0,"Accum_AE_Rec":0,"Accum_AE_Sum":0,"Accum_APE_Del":0,"Accum_APE_Net":0,"Accum_APE_Rec":0,"Accum_APE_Sum":0,"Accum_Energy_Reset_Time":"2025-04-04 13:06:00.000","Accum_RE_Del":0,"Accum_RE_Net":0,"Accum_RE_Rec":0,"Accum_RE_Sum":0,"ActivePower_A":0.0158,"ActivePower_B":"N/A_FLOAT32","ActivePower_C":"N/A_FLOAT32","ActivePower_Total":0.0158,"ApparentPower_A":0.0203,"ApparentPower_B":"N/A_FLOAT32","ApparentPower_C":"N/A_FLOAT32","ApparentPower_Total":0.0203,"Cur_Dem_Interval_Dur":15,"Current_A":0.0865,"Current_Avg":0.0865,"Current_B":"N/A_FLOAT32","Current_C":"N/A_FLOAT32","Current_G":"N/A_FLOAT32","Current_N":"N/A_FLOAT32","Current_Unbalance_A":"N/A_FLOAT32","Current_Unbalance_B":"N/A_FLOAT32","Current_Unbalance_C":"N/A_FLOAT32","Current_Unbalance_Worst":"N/A_FLOAT32","DPF_A":0.3792,"DPF_B":-0.0064,"DPF_C":-0.0064,"DPF_Total":0.376,"Frequency":50.0265,"Manufacturer":"Schneider Electric","Meter_Model":"Power Meter ","PF_A":0.38,"PF_B":-0.0064,"PF_C":-0.0064,"PF_Total":0.38,"PF_Total_IEC_F32":0.7831,"PF_Total_IEC_I16":783,"PF_Total_IEEE_F32":-0.7831,"PF_Total_IEEE_I16":-31985,"Peak_Demand_Date_time":"2025-04-11 21:48:00.000","Pwr_Dem_Interval_Dur":15,"RE_Del_Minus_Rec":0,"RE_Del_Plus_Rec":0,"RE_Delivered":0,"RE_Received":0,"RS485_Addr":1,"RS485_Baud":2,"RS485_Parity":2,"RS485_Proto":0,"ReactivePower_A":0.0126,"ReactivePower_B":"N/A_FLOAT32","ReactivePower_C":"N/A_FLOAT32","ReactivePower_Total":0.0126,"Voltage_AB":"N/A_FLOAT32","Voltage_AN":233.476,"Voltage_BC":"N/A_FLOAT32","Voltage_BN":"N/A_FLOAT32","Voltage_CA":"N/A_FLOAT32","Voltage_CN":"N/A_FLOAT32","Voltage_LLAvg":"N/A_FLOAT32","Voltage_LNAvg":233.476,"Voltage_Unbalance_AB":"N/A_FLOAT32","Voltage_Unbalance_AN":"N/A_FLOAT32","Voltage_Unbalance_BC":"N/A_FLOAT32","Voltage_Unbalance_BN":"N/A_FLOAT32","Voltage_Unbalance_CA":"N/A_FLOAT32","Voltage_Unbalance_CN":"N/A_FLOAT32","Voltage_Unbalance_LL_Worst":"N/A_FLOAT32","Voltage_Unbalance_LN_Worst":"N/A_FLOAT32","level":"info","msg":"Modbus Data Read","read_cycle":3,"read_duration_ms":4391,"registers_error":0,"registers_ok":85,"registers_total_attempted":85,"slave_id":1,"time":"2025-04-11T21:21:25.4390865+07:00","timestamp_rfc3339":"2025-04-11T21:21:21.0470166+07:00"}
+
+==================== Lần đọc thứ 4 (21:21:26) ====================
+--- Device Info ---
+Meter_Model                   : "Power Meter "
+------------------------------------------
+--- Manufacturer ---
+Manufacturer                  : "Schneider Electric"
+------------------------------------------
+--- Date/Time ---
+Peak_Demand_Date_time         : "2025-04-11 21:48:00.000"
+------------------------------------------
+--- Energy(Inst) ---
+AE_Delivered                  : 0.0000
+AE_Received                   : 0.0000
+AE_Del_Plus_Rec               : 0.0000
+AE_Del_Minus_Rec              : 0.0000
+RE_Delivered                  : 0.0000
+RE_Received                   : 0.0000
+RE_Del_Plus_Rec               : 0.0000
+RE_Del_Minus_Rec              : 0.0000
+APE_Delivered                 : 0.0000
+APE_Received                  : 0.0000
+APE_Del_Plus_Rec              : 0.0000
+APE_Del_Minus_Rec             : 0.0000
+------------------------------------------
+--- Current ---
+Current_A                     : 0.0865
+Current_B                     : "N/A_FLOAT32"
+Current_C                     : "N/A_FLOAT32"
+Current_N                     : "N/A_FLOAT32"
+Current_G                     : "N/A_FLOAT32"
+Current_Avg                   : 0.0865
+------------------------------------------
+--- Current Unbalance ---
+Current_Unbalance_A           : "N/A_FLOAT32"
+Current_Unbalance_B           : "N/A_FLOAT32"
+Current_Unbalance_C           : "N/A_FLOAT32"
+Current_Unbalance_Worst       : "N/A_FLOAT32"
+------------------------------------------
+--- Voltage ---
+Voltage_AB                    : "N/A_FLOAT32"
+Voltage_BC                    : "N/A_FLOAT32"
+Voltage_CA                    : "N/A_FLOAT32"
+Voltage_LLAvg                 : "N/A_FLOAT32"
+Voltage_AN                    : 233.5809
+Voltage_BN                    : "N/A_FLOAT32"
+Voltage_CN                    : "N/A_FLOAT32"
+Voltage_LNAvg                 : 233.5809
+------------------------------------------
+--- Voltage Unbalance ---
+Voltage_Unbalance_AB          : "N/A_FLOAT32"
+Voltage_Unbalance_BC          : "N/A_FLOAT32"
+Voltage_Unbalance_CA          : "N/A_FLOAT32"
+Voltage_Unbalance_LL_Worst    : "N/A_FLOAT32"
+Voltage_Unbalance_AN          : "N/A_FLOAT32"
+Voltage_Unbalance_BN          : "N/A_FLOAT32"
+Voltage_Unbalance_CN          : "N/A_FLOAT32"
+Voltage_Unbalance_LN_Worst    : "N/A_FLOAT32"
+------------------------------------------
+--- ActivePower ---
+ActivePower_A                 : 0.0159
+ActivePower_B                 : "N/A_FLOAT32"
+ActivePower_C                 : "N/A_FLOAT32"
+ActivePower_Total             : 0.0159
+------------------------------------------
+--- ReactivePower ---
+ReactivePower_A               : 0.0127
+ReactivePower_B               : "N/A_FLOAT32"
+ReactivePower_C               : "N/A_FLOAT32"
+ReactivePower_Total           : 0.0127
+------------------------------------------
+--- ApparentPower ---
+ApparentPower_A               : 0.0203
+ApparentPower_B               : "N/A_FLOAT32"
+ApparentPower_C               : "N/A_FLOAT32"
+ApparentPower_Total           : 0.0203
+------------------------------------------
+--- PowerFactor ---
+PF_A                          : 0.3800
+PF_B                          : -0.0064
+PF_C                          : -0.0064
+PF_Total                      : 0.3800
+DPF_A                         : 0.3792
+DPF_B                         : -0.0064
+DPF_C                         : -0.0064
+DPF_Total                     : 0.3760
+PF_Total_IEC_F32              : 0.7821
+PF_Total_IEEE_F32             : -0.7821
+PF_Total_IEC_I16              : 782
+PF_Total_IEEE_I16             : -31986
+------------------------------------------
+--- Frequency ---
+Frequency                     : 50.0507
+------------------------------------------
+--- Energy(Accum) ---
+Accum_Energy_Reset_Time       : "2025-04-04 13:06:00.000"
+Accum_AE_Del                  : 0
+Accum_AE_Rec                  : 0
+Accum_AE_Sum                  : 0
+Accum_AE_Net                  : 0
+Accum_RE_Del                  : 0
+Accum_RE_Rec                  : 0
+Accum_RE_Sum                  : 0
+Accum_RE_Net                  : 0
+Accum_APE_Del                 : 0
+Accum_APE_Rec                 : 0
+Accum_APE_Sum                 : 0
+Accum_APE_Net                 : 0
+------------------------------------------
+--- Settings ---
+Pwr_Dem_Interval_Dur          : 15
+Cur_Dem_Interval_Dur          : 15
+RS485_Proto                   : 0
+RS485_Addr                    : 1
+RS485_Baud                    : 2
+RS485_Parity                  : 2
+==================================================================
+{"AE_Del_Minus_Rec":0,"AE_Del_Plus_Rec":0,"AE_Delivered":0,"AE_Received":0,"APE_Del_Minus_Rec":0,"APE_Del_Plus_Rec":0,"APE_Delivered":0,"APE_Received":0,"Accum_AE_Del":0,"Accum_AE_Net":0,"Accum_AE_Rec":0,"Accum_AE_Sum":0,"Accum_APE_Del":0,"Accum_APE_Net":0,"Accum_APE_Rec":0,"Accum_APE_Sum":0,"Accum_Energy_Reset_Time":"2025-04-04 13:06:00.000","Accum_RE_Del":0,"Accum_RE_Net":0,"Accum_RE_Rec":0,"Accum_RE_Sum":0,"ActivePower_A":0.0159,"ActivePower_B":"N/A_FLOAT32","ActivePower_C":"N/A_FLOAT32","ActivePower_Total":0.0159,"ApparentPower_A":0.0203,"ApparentPower_B":"N/A_FLOAT32","ApparentPower_C":"N/A_FLOAT32","ApparentPower_Total":0.0203,"Cur_Dem_Interval_Dur":15,"Current_A":0.0865,"Current_Avg":0.0865,"Current_B":"N/A_FLOAT32","Current_C":"N/A_FLOAT32","Current_G":"N/A_FLOAT32","Current_N":"N/A_FLOAT32","Current_Unbalance_A":"N/A_FLOAT32","Current_Unbalance_B":"N/A_FLOAT32","Current_Unbalance_C":"N/A_FLOAT32","Current_Unbalance_Worst":"N/A_FLOAT32","DPF_A":0.3792,"DPF_B":-0.0064,"DPF_C":-0.0064,"DPF_Total":0.376,"Frequency":50.0507,"Manufacturer":"Schneider Electric","Meter_Model":"Power Meter ","PF_A":0.38,"PF_B":-0.0064,"PF_C":-0.0064,"PF_Total":0.38,"PF_Total_IEC_F32":0.7821,"PF_Total_IEC_I16":782,"PF_Total_IEEE_F32":-0.7821,"PF_Total_IEEE_I16":-31986,"Peak_Demand_Date_time":"2025-04-11 21:48:00.000","Pwr_Dem_Interval_Dur":15,"RE_Del_Minus_Rec":0,"RE_Del_Plus_Rec":0,"RE_Delivered":0,"RE_Received":0,"RS485_Addr":1,"RS485_Baud":2,"RS485_Parity":2,"RS485_Proto":0,"ReactivePower_A":0.0127,"ReactivePower_B":"N/A_FLOAT32","ReactivePower_C":"N/A_FLOAT32","ReactivePower_Total":0.0127,"Voltage_AB":"N/A_FLOAT32","Voltage_AN":233.5809,"Voltage_BC":"N/A_FLOAT32","Voltage_BN":"N/A_FLOAT32","Voltage_CA":"N/A_FLOAT32","Voltage_CN":"N/A_FLOAT32","Voltage_LLAvg":"N/A_FLOAT32","Voltage_LNAvg":233.5809,"Voltage_Unbalance_AB":"N/A_FLOAT32","Voltage_Unbalance_AN":"N/A_FLOAT32","Voltage_Unbalance_BC":"N/A_FLOAT32","Voltage_Unbalance_BN":"N/A_FLOAT32","Voltage_Unbalance_CA":"N/A_FLOAT32","Voltage_Unbalance_CN":"N/A_FLOAT32","Voltage_Unbalance_LL_Worst":"N/A_FLOAT32","Voltage_Unbalance_LN_Worst":"N/A_FLOAT32","level":"info","msg":"Modbus Data Read","read_cycle":4,"read_duration_ms":4077,"registers_error":0,"registers_ok":85,"registers_total_attempted":85,"slave_id":1,"time":"2025-04-11T21:21:30.573216+07:00","timestamp_rfc3339":"2025-04-11T21:21:26.495439+07:00"}
+
+==================== Lần đọc thứ 5 (21:21:31) ====================
+--- Device Info ---
+Meter_Model                   : "Power Meter "
+------------------------------------------
+--- Manufacturer ---
+Manufacturer                  : "Schneider Electric"
+------------------------------------------
+--- Date/Time ---
+Peak_Demand_Date_time         : "2025-04-11 21:48:00.000"
+------------------------------------------
+--- Energy(Inst) ---
+AE_Delivered                  : 0.0000
+AE_Received                   : 0.0000
+AE_Del_Plus_Rec               : 0.0000
+AE_Del_Minus_Rec              : 0.0000
+RE_Delivered                  : 0.0000
+RE_Received                   : 0.0000
+RE_Del_Plus_Rec               : 0.0000
+RE_Del_Minus_Rec              : 0.0000
+APE_Delivered                 : 0.0000
+APE_Received                  : 0.0000
+APE_Del_Plus_Rec              : 0.0000
+APE_Del_Minus_Rec             : 0.0000
+------------------------------------------
+--- Current ---
+Current_A                     : 0.0870
+Current_B                     : "N/A_FLOAT32"
+Current_C                     : "N/A_FLOAT32"
+Current_N                     : "N/A_FLOAT32"
+Current_G                     : "N/A_FLOAT32"
+Current_Avg                   : 0.0870
+------------------------------------------
+--- Current Unbalance ---
+Current_Unbalance_A           : "N/A_FLOAT32"
+Current_Unbalance_B           : "N/A_FLOAT32"
+Current_Unbalance_C           : "N/A_FLOAT32"
+Current_Unbalance_Worst       : "N/A_FLOAT32"
+------------------------------------------
+--- Voltage ---
+Voltage_AB                    : "N/A_FLOAT32"
+Voltage_BC                    : "N/A_FLOAT32"
+Voltage_CA                    : "N/A_FLOAT32"
+Voltage_LLAvg                 : "N/A_FLOAT32"
+Voltage_AN                    : 233.3997
+Voltage_BN                    : "N/A_FLOAT32"
+Voltage_CN                    : "N/A_FLOAT32"
+Voltage_LNAvg                 : 233.3997
+------------------------------------------
+--- Voltage Unbalance ---
+Voltage_Unbalance_AB          : "N/A_FLOAT32"
+Voltage_Unbalance_BC          : "N/A_FLOAT32"
+Voltage_Unbalance_CA          : "N/A_FLOAT32"
+Voltage_Unbalance_LL_Worst    : "N/A_FLOAT32"
+Voltage_Unbalance_AN          : "N/A_FLOAT32"
+Voltage_Unbalance_BN          : "N/A_FLOAT32"
+Voltage_Unbalance_CN          : "N/A_FLOAT32"
+Voltage_Unbalance_LN_Worst    : "N/A_FLOAT32"
+------------------------------------------
+--- ActivePower ---
+ActivePower_A                 : 0.0159
+ActivePower_B                 : "N/A_FLOAT32"
+ActivePower_C                 : "N/A_FLOAT32"
+ActivePower_Total             : 0.0159
+------------------------------------------
+--- ReactivePower ---
+ReactivePower_A               : 0.0127
+ReactivePower_B               : "N/A_FLOAT32"
+ReactivePower_C               : "N/A_FLOAT32"
+ReactivePower_Total           : 0.0127
+------------------------------------------
+--- ApparentPower ---
+ApparentPower_A               : 0.0204
+ApparentPower_B               : "N/A_FLOAT32"
+ApparentPower_C               : "N/A_FLOAT32"
+ApparentPower_Total           : 0.0204
+------------------------------------------
+--- PowerFactor ---
+PF_A                          : 0.3800
+PF_B                          : -0.0064
+PF_C                          : -0.0064
+PF_Total                      : 0.3800
+DPF_A                         : 0.3791
+DPF_B                         : -0.0064
+DPF_C                         : -0.0064
+DPF_Total                     : 0.3760
+PF_Total_IEC_F32              : 0.7831
+PF_Total_IEEE_F32             : -0.7841
+PF_Total_IEC_I16              : 784
+PF_Total_IEEE_I16             : -31984
+------------------------------------------
+--- Frequency ---
+Frequency                     : 50.0646
+------------------------------------------
+--- Energy(Accum) ---
+Accum_Energy_Reset_Time       : "2025-04-04 13:06:00.000"
+Accum_AE_Del                  : 0
+Accum_AE_Rec                  : 0
+Accum_AE_Sum                  : 0
+Accum_AE_Net                  : 0
+Accum_RE_Del                  : 0
+Accum_RE_Rec                  : 0
+Accum_RE_Sum                  : 0
+Accum_RE_Net                  : 0
+Accum_APE_Del                 : 0
+Accum_APE_Rec                 : 0
+Accum_APE_Sum                 : 0
+Accum_APE_Net                 : 0
+------------------------------------------
+--- Settings ---
+Pwr_Dem_Interval_Dur          : 15
+Cur_Dem_Interval_Dur          : 15
+RS485_Proto                   : 0
+RS485_Addr                    : 1
+RS485_Baud                    : 2
+RS485_Parity                  : 2
+==================================================================
+{"AE_Del_Minus_Rec":0,"AE_Del_Plus_Rec":0,"AE_Delivered":0,"AE_Received":0,"APE_Del_Minus_Rec":0,"APE_Del_Plus_Rec":0,"APE_Delivered":0,"APE_Received":0,"Accum_AE_Del":0,"Accum_AE_Net":0,"Accum_AE_Rec":0,"Accum_AE_Sum":0,"Accum_APE_Del":0,"Accum_APE_Net":0,"Accum_APE_Rec":0,"Accum_APE_Sum":0,"Accum_Energy_Reset_Time":"2025-04-04 13:06:00.000","Accum_RE_Del":0,"Accum_RE_Net":0,"Accum_RE_Rec":0,"Accum_RE_Sum":0,"ActivePower_A":0.0159,"ActivePower_B":"N/A_FLOAT32","ActivePower_C":"N/A_FLOAT32","ActivePower_Total":0.0159,"ApparentPower_A":0.0204,"ApparentPower_B":"N/A_FLOAT32","ApparentPower_C":"N/A_FLOAT32","ApparentPower_Total":0.0204,"Cur_Dem_Interval_Dur":15,"Current_A":0.087,"Current_Avg":0.087,"Current_B":"N/A_FLOAT32","Current_C":"N/A_FLOAT32","Current_G":"N/A_FLOAT32","Current_N":"N/A_FLOAT32","Current_Unbalance_A":"N/A_FLOAT32","Current_Unbalance_B":"N/A_FLOAT32","Current_Unbalance_C":"N/A_FLOAT32","Current_Unbalance_Worst":"N/A_FLOAT32","DPF_A":0.3791,"DPF_B":-0.0064,"DPF_C":-0.0064,"DPF_Total":0.376,"Frequency":50.0646,"Manufacturer":"Schneider Electric","Meter_Model":"Power Meter ","PF_A":0.38,"PF_B":-0.0064,"PF_C":-0.0064,"PF_Total":0.38,"PF_Total_IEC_F32":0.7831,"PF_Total_IEC_I16":784,"PF_Total_IEEE_F32":-0.7841,"PF_Total_IEEE_I16":-31984,"Peak_Demand_Date_time":"2025-04-11 21:48:00.000","Pwr_Dem_Interval_Dur":15,"RE_Del_Minus_Rec":0,"RE_Del_Plus_Rec":0,"RE_Delivered":0,"RE_Received":0,"RS485_Addr":1,"RS485_Baud":2,"RS485_Parity":2,"RS485_Proto":0,"ReactivePower_A":0.0127,"ReactivePower_B":"N/A_FLOAT32","ReactivePower_C":"N/A_FLOAT32","ReactivePower_Total":0.0127,"Voltage_AB":"N/A_FLOAT32","Voltage_AN":233.3997,"Voltage_BC":"N/A_FLOAT32","Voltage_BN":"N/A_FLOAT32","Voltage_CA":"N/A_FLOAT32","Voltage_CN":"N/A_FLOAT32","Voltage_LLAvg":"N/A_FLOAT32","Voltage_LNAvg":233.3997,"Voltage_Unbalance_AB":"N/A_FLOAT32","Voltage_Unbalance_AN":"N/A_FLOAT32","Voltage_Unbalance_BC":"N/A_FLOAT32","Voltage_Unbalance_BN":"N/A_FLOAT32","Voltage_Unbalance_CA":"N/A_FLOAT32","Voltage_Unbalance_CN":"N/A_FLOAT32","Voltage_Unbalance_LL_Worst":"N/A_FLOAT32","Voltage_Unbalance_LN_Worst":"N/A_FLOAT32","level":"info","msg":"Modbus Data Read","read_cycle":5,"read_duration_ms":4063,"registers_error":0,"registers_ok":85,"registers_total_attempted":85,"slave_id":1,"time":"2025-04-11T21:21:35.7035943+07:00","timestamp_rfc3339":"2025-04-11T21:21:31.6395665+07:00"}
+
+==================== Lần đọc thứ 6 (21:21:36) ====================
+--- Device Info ---
+Meter_Model                   : "Power Meter "
+------------------------------------------
+--- Manufacturer ---
+Manufacturer                  : "Schneider Electric"
+------------------------------------------
+--- Date/Time ---
+Peak_Demand_Date_time         : "2025-04-11 21:48:00.000"
+------------------------------------------
+--- Energy(Inst) ---
+AE_Delivered                  : 0.0000
+AE_Received                   : 0.0000
+AE_Del_Plus_Rec               : 0.0000
+AE_Del_Minus_Rec              : 0.0000
+RE_Delivered                  : 0.0000
+RE_Received                   : 0.0000
+RE_Del_Plus_Rec               : 0.0000
+RE_Del_Minus_Rec              : 0.0000
+APE_Delivered                 : 0.0000
+APE_Received                  : 0.0000
+APE_Del_Plus_Rec              : 0.0000
+APE_Del_Minus_Rec             : 0.0000
+------------------------------------------
+--- Current ---
+Current_A                     : 0.0870
+Current_B                     : "N/A_FLOAT32"
+Current_C                     : "N/A_FLOAT32"
+Current_N                     : "N/A_FLOAT32"
+Current_G                     : "N/A_FLOAT32"
+Current_Avg                   : 0.0870
+------------------------------------------
+--- Current Unbalance ---
+Current_Unbalance_A           : "N/A_FLOAT32"
+Current_Unbalance_B           : "N/A_FLOAT32"
+Current_Unbalance_C           : "N/A_FLOAT32"
+Current_Unbalance_Worst       : "N/A_FLOAT32"
+------------------------------------------
+--- Voltage ---
+Voltage_AB                    : "N/A_FLOAT32"
+Voltage_BC                    : "N/A_FLOAT32"
+Voltage_CA                    : "N/A_FLOAT32"
+Voltage_LLAvg                 : "N/A_FLOAT32"
+Voltage_AN                    : 233.3681
+Voltage_BN                    : "N/A_FLOAT32"
+Voltage_CN                    : "N/A_FLOAT32"
+Voltage_LNAvg                 : 233.3681
+------------------------------------------
+--- Voltage Unbalance ---
+Voltage_Unbalance_AB          : "N/A_FLOAT32"
+Voltage_Unbalance_BC          : "N/A_FLOAT32"
+Voltage_Unbalance_CA          : "N/A_FLOAT32"
+Voltage_Unbalance_LL_Worst    : "N/A_FLOAT32"
+Voltage_Unbalance_AN          : "N/A_FLOAT32"
+Voltage_Unbalance_BN          : "N/A_FLOAT32"
+Voltage_Unbalance_CN          : "N/A_FLOAT32"
+Voltage_Unbalance_LN_Worst    : "N/A_FLOAT32"
+------------------------------------------
+--- ActivePower ---
+ActivePower_A                 : 0.0160
+ActivePower_B                 : "N/A_FLOAT32"
+ActivePower_C                 : "N/A_FLOAT32"
+ActivePower_Total             : 0.0160
+------------------------------------------
+--- ReactivePower ---
+ReactivePower_A               : 0.0126
+ReactivePower_B               : "N/A_FLOAT32"
+ReactivePower_C               : "N/A_FLOAT32"
+ReactivePower_Total           : 0.0126
+------------------------------------------
+--- ApparentPower ---
+ApparentPower_A               : 0.0204
+ApparentPower_B               : "N/A_FLOAT32"
+ApparentPower_C               : "N/A_FLOAT32"
+ApparentPower_Total           : 0.0204
+------------------------------------------
+--- PowerFactor ---
+PF_A                          : 0.3799
+PF_B                          : -0.0064
+PF_C                          : -0.0064
+PF_Total                      : 0.3799
+DPF_A                         : 0.3790
+DPF_B                         : -0.0064
+DPF_C                         : -0.0064
+DPF_Total                     : 0.3760
+PF_Total_IEC_F32              : 0.7845
+PF_Total_IEEE_F32             : -0.7845
+PF_Total_IEC_I16              : 785
+PF_Total_IEEE_I16             : -31983
+------------------------------------------
+--- Frequency ---
+Frequency                     : 50.0654
+------------------------------------------
+--- Energy(Accum) ---
+Accum_Energy_Reset_Time       : "2025-04-04 13:06:00.000"
+Accum_AE_Del                  : 0
+Accum_AE_Rec                  : 0
+Accum_AE_Sum                  : 0
+Accum_AE_Net                  : 0
+Accum_RE_Del                  : 0
+Accum_RE_Rec                  : 0
+Accum_RE_Sum                  : 0
+Accum_RE_Net                  : 0
+Accum_APE_Del                 : 1
+Accum_APE_Rec                 : 0
+Accum_APE_Sum                 : 1
+Accum_APE_Net                 : 1
+------------------------------------------
+--- Settings ---
+Pwr_Dem_Interval_Dur          : 15
+Cur_Dem_Interval_Dur          : 15
+RS485_Proto                   : 0
+RS485_Addr                    : 1
+RS485_Baud                    : 2
+RS485_Parity                  : 2
+==================================================================
+{"AE_Del_Minus_Rec":0,"AE_Del_Plus_Rec":0,"AE_Delivered":0,"AE_Received":0,"APE_Del_Minus_Rec":0,"APE_Del_Plus_Rec":0,"APE_Delivered":0,"APE_Received":0,"Accum_AE_Del":0,"Accum_AE_Net":0,"Accum_AE_Rec":0,"Accum_AE_Sum":0,"Accum_APE_Del":1,"Accum_APE_Net":1,"Accum_APE_Rec":0,"Accum_APE_Sum":1,"Accum_Energy_Reset_Time":"2025-04-04 13:06:00.000","Accum_RE_Del":0,"Accum_RE_Net":0,"Accum_RE_Rec":0,"Accum_RE_Sum":0,"ActivePower_A":0.016,"ActivePower_B":"N/A_FLOAT32","ActivePower_C":"N/A_FLOAT32","ActivePower_Total":0.016,"ApparentPower_A":0.0204,"ApparentPower_B":"N/A_FLOAT32","ApparentPower_C":"N/A_FLOAT32","ApparentPower_Total":0.0204,"Cur_Dem_Interval_Dur":15,"Current_A":0.087,"Current_Avg":0.087,"Current_B":"N/A_FLOAT32","Current_C":"N/A_FLOAT32","Current_G":"N/A_FLOAT32","Current_N":"N/A_FLOAT32","Current_Unbalance_A":"N/A_FLOAT32","Current_Unbalance_B":"N/A_FLOAT32","Current_Unbalance_C":"N/A_FLOAT32","Current_Unbalance_Worst":"N/A_FLOAT32","DPF_A":0.379,"DPF_B":-0.0064,"DPF_C":-0.0064,"DPF_Total":0.376,"Frequency":50.0654,"Manufacturer":"Schneider Electric","Meter_Model":"Power Meter ","PF_A":0.3799,"PF_B":-0.0064,"PF_C":-0.0064,"PF_Total":0.3799,"PF_Total_IEC_F32":0.7845,"PF_Total_IEC_I16":785,"PF_Total_IEEE_F32":-0.7845,"PF_Total_IEEE_I16":-31983,"Peak_Demand_Date_time":"2025-04-11 21:48:00.000","Pwr_Dem_Interval_Dur":15,"RE_Del_Minus_Rec":0,"RE_Del_Plus_Rec":0,"RE_Delivered":0,"RE_Received":0,"RS485_Addr":1,"RS485_Baud":2,"RS485_Parity":2,"RS485_Proto":0,"ReactivePower_A":0.0126,"ReactivePower_B":"N/A_FLOAT32","ReactivePower_C":"N/A_FLOAT32","ReactivePower_Total":0.0126,"Voltage_AB":"N/A_FLOAT32","Voltage_AN":233.3681,"Voltage_BC":"N/A_FLOAT32","Voltage_BN":"N/A_FLOAT32","Voltage_CA":"N/A_FLOAT32","Voltage_CN":"N/A_FLOAT32","Voltage_LLAvg":"N/A_FLOAT32","Voltage_LNAvg":233.3681,"Voltage_Unbalance_AB":"N/A_FLOAT32","Voltage_Unbalance_AN":"N/A_FLOAT32","Voltage_Unbalance_BC":"N/A_FLOAT32","Voltage_Unbalance_BN":"N/A_FLOAT32","Voltage_Unbalance_CA":"N/A_FLOAT32","Voltage_Unbalance_CN":"N/A_FLOAT32","Voltage_Unbalance_LL_Worst":"N/A_FLOAT32","Voltage_Unbalance_LN_Worst":"N/A_FLOAT32","level":"info","msg":"Modbus Data Read","read_cycle":6,"read_duration_ms":4100,"registers_error":0,"registers_ok":85,"registers_total_attempted":85,"slave_id":1,"time":"2025-04-11T21:21:40.8743286+07:00","timestamp_rfc3339":"2025-04-11T21:21:36.7735617+07:00"}
+
+==================== Lần đọc thứ 7 (21:21:41) ====================
+--- Device Info ---
+Meter_Model                   : "Power Meter "
+------------------------------------------
+--- Manufacturer ---
+Manufacturer                  : "Schneider Electric"
+------------------------------------------
+--- Date/Time ---
+Peak_Demand_Date_time         : "2025-04-11 21:48:00.000"
+------------------------------------------
+--- Energy(Inst) ---
+AE_Delivered                  : 0.0000
+AE_Received                   : 0.0000
+AE_Del_Plus_Rec               : 0.0000
+AE_Del_Minus_Rec              : 0.0000
+RE_Delivered                  : 0.0000
+RE_Received                   : 0.0000
+RE_Del_Plus_Rec               : 0.0000
+RE_Del_Minus_Rec              : 0.0000
+APE_Delivered                 : 0.0010
+APE_Received                  : 0.0000
+APE_Del_Plus_Rec              : 0.0010
+APE_Del_Minus_Rec             : 0.0010
+------------------------------------------
+--- Current ---
+Current_A                     : 0.0870
+Current_B                     : "N/A_FLOAT32"
+Current_C                     : "N/A_FLOAT32"
+Current_N                     : "N/A_FLOAT32"
+Current_G                     : "N/A_FLOAT32"
+Current_Avg                   : 0.0870
+------------------------------------------
+--- Current Unbalance ---
+Current_Unbalance_A           : "N/A_FLOAT32"
+Current_Unbalance_B           : "N/A_FLOAT32"
+Current_Unbalance_C           : "N/A_FLOAT32"
+Current_Unbalance_Worst       : "N/A_FLOAT32"
+------------------------------------------
+--- Voltage ---
+Voltage_AB                    : "N/A_FLOAT32"
+Voltage_BC                    : "N/A_FLOAT32"
+Voltage_CA                    : "N/A_FLOAT32"
+Voltage_LLAvg                 : "N/A_FLOAT32"
+Voltage_AN                    : 233.2360
+Voltage_BN                    : "N/A_FLOAT32"
+Voltage_CN                    : "N/A_FLOAT32"
+Voltage_LNAvg                 : 233.3018
+------------------------------------------
+--- Voltage Unbalance ---
+Voltage_Unbalance_AB          : "N/A_FLOAT32"
+Voltage_Unbalance_BC          : "N/A_FLOAT32"
+Voltage_Unbalance_CA          : "N/A_FLOAT32"
+Voltage_Unbalance_LL_Worst    : "N/A_FLOAT32"
+Voltage_Unbalance_AN          : "N/A_FLOAT32"
+Voltage_Unbalance_BN          : "N/A_FLOAT32"
+Voltage_Unbalance_CN          : "N/A_FLOAT32"
+Voltage_Unbalance_LN_Worst    : "N/A_FLOAT32"
+------------------------------------------
+--- ActivePower ---
+ActivePower_A                 : 0.0159
+ActivePower_B                 : "N/A_FLOAT32"
+ActivePower_C                 : "N/A_FLOAT32"
+ActivePower_Total             : 0.0159
+------------------------------------------
+--- ReactivePower ---
+ReactivePower_A               : 0.0126
+ReactivePower_B               : "N/A_FLOAT32"
+ReactivePower_C               : "N/A_FLOAT32"
+ReactivePower_Total           : 0.0126
+------------------------------------------
+--- ApparentPower ---
+ApparentPower_A               : 0.0203
+ApparentPower_B               : "N/A_FLOAT32"
+ApparentPower_C               : "N/A_FLOAT32"
+ApparentPower_Total           : 0.0203
+------------------------------------------
+--- PowerFactor ---
+PF_A                          : 0.3800
+PF_B                          : -0.0064
+PF_C                          : -0.0064
+PF_Total                      : 0.3800
+DPF_A                         : 0.3791
+DPF_B                         : -0.0064
+DPF_C                         : -0.0064
+DPF_Total                     : 0.3760
+PF_Total_IEC_F32              : 0.7840
+PF_Total_IEEE_F32             : -0.7840
+PF_Total_IEC_I16              : 784
+PF_Total_IEEE_I16             : -31984
+------------------------------------------
+--- Frequency ---
+Frequency                     : 50.0565
+------------------------------------------
+--- Energy(Accum) ---
+Accum_Energy_Reset_Time       : "2025-04-04 13:06:00.000"
+Accum_AE_Del                  : 0
+Accum_AE_Rec                  : 0
+Accum_AE_Sum                  : 0
+Accum_AE_Net                  : 0
+Accum_RE_Del                  : 0
+Accum_RE_Rec                  : 0
+Accum_RE_Sum                  : 0
+Accum_RE_Net                  : 0
+Accum_APE_Del                 : 1
+Accum_APE_Rec                 : 0
+Accum_APE_Sum                 : 1
+Accum_APE_Net                 : 1
+------------------------------------------
+--- Settings ---
+Pwr_Dem_Interval_Dur          : 15
+Cur_Dem_Interval_Dur          : 15
+RS485_Proto                   : 0
+RS485_Addr                    : 1
+RS485_Baud                    : 2
+RS485_Parity                  : 2
+==================================================================
+{"AE_Del_Minus_Rec":0,"AE_Del_Plus_Rec":0,"AE_Delivered":0,"AE_Received":0,"APE_Del_Minus_Rec":0.001,"APE_Del_Plus_Rec":0.001,"APE_Delivered":0.001,"APE_Received":0,"Accum_AE_Del":0,"Accum_AE_Net":0,"Accum_AE_Rec":0,"Accum_AE_Sum":0,"Accum_APE_Del":1,"Accum_APE_Net":1,"Accum_APE_Rec":0,"Accum_APE_Sum":1,"Accum_Energy_Reset_Time":"2025-04-04 13:06:00.000","Accum_RE_Del":0,"Accum_RE_Net":0,"Accum_RE_Rec":0,"Accum_RE_Sum":0,"ActivePower_A":0.0159,"ActivePower_B":"N/A_FLOAT32","ActivePower_C":"N/A_FLOAT32","ActivePower_Total":0.0159,"ApparentPower_A":0.0203,"ApparentPower_B":"N/A_FLOAT32","ApparentPower_C":"N/A_FLOAT32","ApparentPower_Total":0.0203,"Cur_Dem_Interval_Dur":15,"Current_A":0.087,"Current_Avg":0.087,"Current_B":"N/A_FLOAT32","Current_C":"N/A_FLOAT32","Current_G":"N/A_FLOAT32","Current_N":"N/A_FLOAT32","Current_Unbalance_A":"N/A_FLOAT32","Current_Unbalance_B":"N/A_FLOAT32","Current_Unbalance_C":"N/A_FLOAT32","Current_Unbalance_Worst":"N/A_FLOAT32","DPF_A":0.3791,"DPF_B":-0.0064,"DPF_C":-0.0064,"DPF_Total":0.376,"Frequency":50.0565,"Manufacturer":"Schneider Electric","Meter_Model":"Power Meter ","PF_A":0.38,"PF_B":-0.0064,"PF_C":-0.0064,"PF_Total":0.38,"PF_Total_IEC_F32":0.784,"PF_Total_IEC_I16":784,"PF_Total_IEEE_F32":-0.784,"PF_Total_IEEE_I16":-31984,"Peak_Demand_Date_time":"2025-04-11 21:48:00.000","Pwr_Dem_Interval_Dur":15,"RE_Del_Minus_Rec":0,"RE_Del_Plus_Rec":0,"RE_Delivered":0,"RE_Received":0,"RS485_Addr":1,"RS485_Baud":2,"RS485_Parity":2,"RS485_Proto":0,"ReactivePower_A":0.0126,"ReactivePower_B":"N/A_FLOAT32","ReactivePower_C":"N/A_FLOAT32","ReactivePower_Total":0.0126,"Voltage_AB":"N/A_FLOAT32","Voltage_AN":233.236,"Voltage_BC":"N/A_FLOAT32","Voltage_BN":"N/A_FLOAT32","Voltage_CA":"N/A_FLOAT32","Voltage_CN":"N/A_FLOAT32","Voltage_LLAvg":"N/A_FLOAT32","Voltage_LNAvg":233.3018,"Voltage_Unbalance_AB":"N/A_FLOAT32","Voltage_Unbalance_AN":"N/A_FLOAT32","Voltage_Unbalance_BC":"N/A_FLOAT32","Voltage_Unbalance_BN":"N/A_FLOAT32","Voltage_Unbalance_CA":"N/A_FLOAT32","Voltage_Unbalance_CN":"N/A_FLOAT32","Voltage_Unbalance_LL_Worst":"N/A_FLOAT32","Voltage_Unbalance_LN_Worst":"N/A_FLOAT32","level":"info","msg":"Modbus Data Read","read_cycle":7,"read_duration_ms":4266,"registers_error":0,"registers_ok":85,"registers_total_attempted":85,"slave_id":1,"time":"2025-04-11T21:21:46.1996637+07:00","timestamp_rfc3339":"2025-04-11T21:21:41.9325278+07:00"}
