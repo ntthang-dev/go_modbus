@@ -1,0 +1,7 @@
+[36mINFO[0m[2025-04-13 21:41:46] --- Khởi chạy Gateway Modbus ---             
+[31mERRO[0m[2025-04-13 21:41:46] Không thể đọc danh sách thanh ghi cho thiết bị 'Schneider_PM_COM3' từ file 'register_pm2120.csv'. Bỏ qua thiết bị này.  [31merror[0m="lỗi đọc nội dung file CSV 'register_pm2120.csv': record on line 87: wrong number of fields"
+[33mWARN[0m[2025-04-13 21:41:46] Không có thiết bị nào được kích hoạt trong file cấu hình. Thoát chương trình. 
+[36mINFO[0m[2025-04-13 21:41:46] Đang đóng các file CSV...                    
+[36mINFO[0m[2025-04-13 21:41:46] Đã đóng các file CSV.                        
+[36mINFO[0m[2025-04-13 21:41:46] Đang đóng các storage data writers...        
+[36mINFO[0m[2025-04-13 21:41:46] Đã đóng các storage data writers.            

@@ -1,0 +1,49 @@
+# --- config.yaml ---
+# File cấu hình cho ứng dụng Modbus Go Gateway (Đã bỏ InfluxDB)
+
+# Cấu hình Logging chung
+logging:
+  level: "info"  # debug, info, warn, error
+  enable_csv: true # Bật/tắt ghi file CSV dữ liệu song song
+  status_error_log_file: "gateway_status_%s.log" # Mẫu tên file log trạng thái/lỗi (%s = timestamp)
+
+# Cấu hình lưu trữ (Hiện tại chỉ có tùy chọn CSV được bật/tắt ở logging)
+# storage:
+  # Có thể thêm cấu hình khác nếu cần (ví dụ: SQL DB sau này)
+
+# Danh sách các thiết bị Modbus cần đọc
+devices:
+  - name: "Schneider_PM_COM3" # Tên định danh cho thiết bị
+    enabled: true            # Bật/tắt việc đọc thiết bị này
+    tags:                    # Các tag tùy chỉnh để thêm vào log/DB
+      location: "Tu_Dien_Chinh"
+      panel: "Panel_1"
+    register_list_file: "register_pm2120.csv" # File CSV chứa danh sách thanh ghi
+    connection:
+      type: "rtu"            # Chỉ hỗ trợ rtu
+      port: "COM3"           # Cổng COM
+      baudrate: 19200        # Tốc độ Baud
+      databits: 8
+      parity: "N"            # N, E, O
+      stopbits: 1
+      slaveid: 1             # Slave ID
+      timeout_ms: 1000       # Timeout kết nối/đọc (ms)
+      address_base: 1        # 0 hoặc 1
+    polling_interval_ms: 1000 # Thời gian nghỉ giữa các lần đọc (ms)
+
+  - name: "Device_2_COM4" # Ví dụ cấu hình thiết bị thứ 2 (đang tắt)
+    enabled: false
+    tags:
+      location: "Tram_Bom"
+    register_list_file: "register_pm2120.csv"
+    connection:
+      type: "rtu"
+      port: "COM3"
+      baudrate: 19200
+      parity: "N"
+      stopbits: 1
+      slaveid: 2
+      timeout_ms: 1500
+      address_base: 0
+    polling_interval_ms: 5000
+
