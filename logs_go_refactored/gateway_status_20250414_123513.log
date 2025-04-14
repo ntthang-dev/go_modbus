@@ -1,0 +1,29 @@
+[36mINFO[0m[2025-04-14 12:35:13] --- Khởi chạy Gateway Modbus ---             
+[36mINFO[0m[2025-04-14 12:35:13] Đã đọc 85 thanh ghi cho thiết bị 'Schneider_PM_COM3' 
+[36mINFO[0m[2025-04-14 12:35:13] Bắt đầu vòng lặp đọc dữ liệu...               [36mdevice[0m=Schneider_PM_COM3
+[36mINFO[0m[2025-04-14 12:35:13] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3
+[36mINFO[0m[2025-04-14 12:35:13] Đã đọc 85 thanh ghi cho thiết bị 'Schneider_PM_COM3_Device2' 
+[36mINFO[0m[2025-04-14 12:35:13] Đã khởi chạy 2 goroutine cho các thiết bị. Nhấn Ctrl+C để dừng. 
+[36mINFO[0m[2025-04-14 12:35:13] Bắt đầu vòng lặp đọc dữ liệu...               [36mdevice[0m=Schneider_PM_COM3_Device2
+[36mINFO[0m[2025-04-14 12:35:13] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3_Device2
+[31mERRO[0m[2025-04-14 12:35:13] Kết nối Modbus thất bại                       [31mdevice[0m=Schneider_PM_COM3_Device2 [31merror[0m="Access is denied."
+[36mINFO[0m[2025-04-14 12:35:13] >>> Kết nối Modbus thành công!                [36mdevice[0m=Schneider_PM_COM3
+[36mINFO[0m[2025-04-14 12:35:18] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3_Device2
+[31mERRO[0m[2025-04-14 12:35:18] Kết nối Modbus thất bại                       [31mdevice[0m=Schneider_PM_COM3_Device2 [31merror[0m="Access is denied."
+[36mINFO[0m[2025-04-14 12:35:18] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4384
+[36mINFO[0m[2025-04-14 12:35:22] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4334
+[36mINFO[0m[2025-04-14 12:35:23] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3_Device2
+[31mERRO[0m[2025-04-14 12:35:23] Kết nối Modbus thất bại                       [31mdevice[0m=Schneider_PM_COM3_Device2 [31merror[0m="Access is denied."
+[33mWARN[0m[2025-04-14 12:35:25] Đã nhận tín hiệu dừng. Đang yêu cầu các goroutine kết thúc... 
+[36mINFO[0m[2025-04-14 12:35:25] Đang chờ các goroutine hoàn thành...         
+[36mINFO[0m[2025-04-14 12:35:25] Nhận tín hiệu dừng trong khi chờ kết nối lại.  [36mdevice[0m=Schneider_PM_COM3_Device2
+[36mINFO[0m[2025-04-14 12:35:27] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4749
+[36mINFO[0m[2025-04-14 12:35:31] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4343
+[36mINFO[0m[2025-04-14 12:35:36] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4289
+[36mINFO[0m[2025-04-14 12:35:36] Nhận tín hiệu dừng, kết thúc vòng lặp đọc.    [36mdevice[0m=Schneider_PM_COM3
+[36mINFO[0m[2025-04-14 12:35:36] Đang đóng kết nối Modbus...                   [36mdevice[0m=Schneider_PM_COM3
+[36mINFO[0m[2025-04-14 12:35:36] Tất cả goroutine đã dừng. Chương trình kết thúc. 
+[36mINFO[0m[2025-04-14 12:35:36] Đang đóng các file CSV...                    
+[36mINFO[0m[2025-04-14 12:35:36] Đã đóng các file CSV.                        
+[36mINFO[0m[2025-04-14 12:35:36] Đang đóng các storage data writers...        
+[36mINFO[0m[2025-04-14 12:35:36] Đã đóng các storage data writers.            

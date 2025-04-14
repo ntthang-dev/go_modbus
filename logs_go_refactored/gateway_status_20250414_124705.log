@@ -1,0 +1,115 @@
+[36mINFO[0m[2025-04-14 12:47:05] --- Khởi chạy Gateway Modbus ---             
+[36mINFO[0m[2025-04-14 12:47:05] Đã đọc 85 thanh ghi cho thiết bị 'Schneider_PM_COM3' 
+[33mWARN[0m[2025-04-14 12:47:05] Thiết bị 'Schneider_PM_COM3_Device2' đang bị vô hiệu hóa trong cấu hình. 
+[36mINFO[0m[2025-04-14 12:47:05] Đã khởi chạy 1 goroutine cho các thiết bị. Nhấn Ctrl+C để dừng. 
+[36mINFO[0m[2025-04-14 12:47:05] Bắt đầu vòng lặp đọc dữ liệu...               [36mdevice[0m=Schneider_PM_COM3
+[36mINFO[0m[2025-04-14 12:47:05] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3
+[36mINFO[0m[2025-04-14 12:47:05] >>> Kết nối Modbus thành công!                [36mdevice[0m=Schneider_PM_COM3
+[36mINFO[0m[2025-04-14 12:47:10] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4329
+[36mINFO[0m[2025-04-14 12:47:14] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4126
+[36mINFO[0m[2025-04-14 12:47:18] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4199
+[36mINFO[0m[2025-04-14 12:47:22] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4212
+[36mINFO[0m[2025-04-14 12:47:27] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4296
+[36mINFO[0m[2025-04-14 12:47:31] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4373
+[36mINFO[0m[2025-04-14 12:47:35] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4316
+[36mINFO[0m[2025-04-14 12:47:40] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4160
+[36mINFO[0m[2025-04-14 12:47:44] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4243
+[36mINFO[0m[2025-04-14 12:47:48] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4296
+[36mINFO[0m[2025-04-14 12:47:52] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4302
+[36mINFO[0m[2025-04-14 12:47:56] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4094
+[36mINFO[0m[2025-04-14 12:48:01] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4109
+[36mINFO[0m[2025-04-14 12:48:05] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4198
+[36mINFO[0m[2025-04-14 12:48:09] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4244
+[36mINFO[0m[2025-04-14 12:48:13] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4270
+[36mINFO[0m[2025-04-14 12:48:18] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4191
+[36mINFO[0m[2025-04-14 12:48:22] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4261
+[36mINFO[0m[2025-04-14 12:48:26] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4199
+[36mINFO[0m[2025-04-14 12:48:30] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4176
+[36mINFO[0m[2025-04-14 12:48:34] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4132
+[36mINFO[0m[2025-04-14 12:48:39] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4248
+[36mINFO[0m[2025-04-14 12:48:43] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4125
+[36mINFO[0m[2025-04-14 12:48:47] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4328
+[36mINFO[0m[2025-04-14 12:48:51] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4325
+[36mINFO[0m[2025-04-14 12:48:56] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4301
+[36mINFO[0m[2025-04-14 12:49:00] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4285
+[36mINFO[0m[2025-04-14 12:49:04] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4441
+[36mINFO[0m[2025-04-14 12:49:09] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4269
+[36mINFO[0m[2025-04-14 12:49:13] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4170
+[36mINFO[0m[2025-04-14 12:49:17] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4264
+[36mINFO[0m[2025-04-14 12:49:21] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4412
+[36mINFO[0m[2025-04-14 12:49:26] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4429
+[36mINFO[0m[2025-04-14 12:49:30] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4396
+[36mINFO[0m[2025-04-14 12:49:35] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4445
+[36mINFO[0m[2025-04-14 12:49:39] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4412
+[36mINFO[0m[2025-04-14 12:49:44] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4379
+[36mINFO[0m[2025-04-14 12:49:48] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4460
+[36mINFO[0m[2025-04-14 12:49:52] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4391
+[36mINFO[0m[2025-04-14 12:49:57] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4452
+[36mINFO[0m[2025-04-14 12:50:01] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4362
+[36mINFO[0m[2025-04-14 12:50:06] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4411
+[36mINFO[0m[2025-04-14 12:50:10] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4397
+[36mINFO[0m[2025-04-14 12:50:14] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4362
+[36mINFO[0m[2025-04-14 12:50:19] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4395
+[36mINFO[0m[2025-04-14 12:50:23] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4428
+[36mINFO[0m[2025-04-14 12:50:28] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4430
+[36mINFO[0m[2025-04-14 12:50:32] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4446
+[36mINFO[0m[2025-04-14 12:50:36] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4429
+[36mINFO[0m[2025-04-14 12:50:41] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4356
+[36mINFO[0m[2025-04-14 12:50:45] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4348
+[36mINFO[0m[2025-04-14 12:50:50] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4350
+[36mINFO[0m[2025-04-14 12:50:54] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4362
+[36mINFO[0m[2025-04-14 12:50:58] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4394
+[36mINFO[0m[2025-04-14 12:51:03] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4361
+[36mINFO[0m[2025-04-14 12:51:07] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4332
+[36mINFO[0m[2025-04-14 12:51:11] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4311
+[36mINFO[0m[2025-04-14 12:51:16] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4344
+[36mINFO[0m[2025-04-14 12:51:20] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4330
+[36mINFO[0m[2025-04-14 12:51:24] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4381
+[36mINFO[0m[2025-04-14 12:51:29] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4294
+[36mINFO[0m[2025-04-14 12:51:33] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4295
+[36mINFO[0m[2025-04-14 12:51:37] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4294
+[36mINFO[0m[2025-04-14 12:51:42] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4314
+[36mINFO[0m[2025-04-14 12:51:46] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4312
+[36mINFO[0m[2025-04-14 12:51:50] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4430
+[36mINFO[0m[2025-04-14 12:51:55] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4408
+[36mINFO[0m[2025-04-14 12:51:59] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4366
+[36mINFO[0m[2025-04-14 12:52:03] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4378
+[36mINFO[0m[2025-04-14 12:52:08] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4262
+[36mINFO[0m[2025-04-14 12:52:12] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4330
+[36mINFO[0m[2025-04-14 12:52:16] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4396
+[36mINFO[0m[2025-04-14 12:52:21] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4228
+[36mINFO[0m[2025-04-14 12:52:25] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4344
+[36mINFO[0m[2025-04-14 12:52:29] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4316
+[36mINFO[0m[2025-04-14 12:52:34] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4245
+[36mINFO[0m[2025-04-14 12:52:38] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4379
+[36mINFO[0m[2025-04-14 12:52:42] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4345
+[36mINFO[0m[2025-04-14 12:52:47] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4346
+[36mINFO[0m[2025-04-14 12:52:51] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4577
+[36mINFO[0m[2025-04-14 12:52:56] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4701
+[36mINFO[0m[2025-04-14 12:53:02] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=5553
+[36mINFO[0m[2025-04-14 12:53:06] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4626
+[36mINFO[0m[2025-04-14 12:53:11] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4998
+[36mINFO[0m[2025-04-14 12:53:17] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=6076
+[36mINFO[0m[2025-04-14 12:53:24] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=6906
+[36mINFO[0m[2025-04-14 12:53:30] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=5875
+[36mINFO[0m[2025-04-14 12:53:35] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=5042
+[36mINFO[0m[2025-04-14 12:53:42] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=6839
+[36mINFO[0m[2025-04-14 12:53:48] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=6164
+[36mINFO[0m[2025-04-14 12:53:53] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4818
+[36mINFO[0m[2025-04-14 12:53:57] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4467
+[36mINFO[0m[2025-04-14 12:54:02] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4338
+[36mINFO[0m[2025-04-14 12:54:06] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4362
+[36mINFO[0m[2025-04-14 12:54:11] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4334
+[36mINFO[0m[2025-04-14 12:54:15] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4292
+[36mINFO[0m[2025-04-14 12:54:19] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4366
+[36mINFO[0m[2025-04-14 12:54:24] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4511
+[33mWARN[0m[2025-04-14 12:54:27] Đã nhận tín hiệu dừng. Đang yêu cầu các goroutine kết thúc... 
+[36mINFO[0m[2025-04-14 12:54:27] Đang chờ các goroutine hoàn thành...         
+[36mINFO[0m[2025-04-14 12:54:28] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4306
+[36mINFO[0m[2025-04-14 12:54:28] Nhận tín hiệu dừng, kết thúc vòng lặp đọc.    [36mdevice[0m=Schneider_PM_COM3
+[36mINFO[0m[2025-04-14 12:54:28] Đang đóng kết nối Modbus...                   [36mdevice[0m=Schneider_PM_COM3
+[36mINFO[0m[2025-04-14 12:54:28] Tất cả goroutine đã dừng. Chương trình kết thúc. 
+[36mINFO[0m[2025-04-14 12:54:28] Đang đóng các file CSV...                    
+[36mINFO[0m[2025-04-14 12:54:28] Đã đóng các file CSV.                        
+[36mINFO[0m[2025-04-14 12:54:28] Đang đóng các storage data writers...        
+[36mINFO[0m[2025-04-14 12:54:28] Đã đóng các storage data writers.            

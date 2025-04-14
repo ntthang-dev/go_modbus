@@ -1,0 +1,98 @@
+[36mINFO[0m[2025-04-14 12:57:36] --- Khởi chạy Gateway Modbus ---             
+[36mINFO[0m[2025-04-14 12:57:36] Đã đọc 85 thanh ghi cho thiết bị 'Schneider_PM_COM3' 
+[36mINFO[0m[2025-04-14 12:57:36] Bắt đầu vòng lặp đọc dữ liệu...               [36mdevice[0m=Schneider_PM_COM3
+[36mINFO[0m[2025-04-14 12:57:36] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3
+[36mINFO[0m[2025-04-14 12:57:36] Đã đọc 85 thanh ghi cho thiết bị 'Schneider_PM_COM3_Device2' 
+[36mINFO[0m[2025-04-14 12:57:36] Đã khởi chạy 2 goroutine cho các thiết bị. Nhấn Ctrl+C để dừng. 
+[36mINFO[0m[2025-04-14 12:57:36] Bắt đầu vòng lặp đọc dữ liệu...               [36mdevice[0m=Schneider_PM_COM3_Device2
+[36mINFO[0m[2025-04-14 12:57:36] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3_Device2
+[31mERRO[0m[2025-04-14 12:57:36] Kết nối Modbus thất bại                       [31mdevice[0m=Schneider_PM_COM3_Device2 [31merror[0m="Access is denied."
+[36mINFO[0m[2025-04-14 12:57:36] >>> Kết nối Modbus thành công!                [36mdevice[0m=Schneider_PM_COM3
+[36mINFO[0m[2025-04-14 12:57:41] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3_Device2
+[31mERRO[0m[2025-04-14 12:57:41] Kết nối Modbus thất bại                       [31mdevice[0m=Schneider_PM_COM3_Device2 [31merror[0m="Access is denied."
+[36mINFO[0m[2025-04-14 12:57:41] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4253
+[36mINFO[0m[2025-04-14 12:57:45] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4238
+[36mINFO[0m[2025-04-14 12:57:46] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3_Device2
+[31mERRO[0m[2025-04-14 12:57:46] Kết nối Modbus thất bại                       [31mdevice[0m=Schneider_PM_COM3_Device2 [31merror[0m="Access is denied."
+[36mINFO[0m[2025-04-14 12:57:50] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4255
+[36mINFO[0m[2025-04-14 12:57:51] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3_Device2
+[31mERRO[0m[2025-04-14 12:57:51] Kết nối Modbus thất bại                       [31mdevice[0m=Schneider_PM_COM3_Device2 [31merror[0m="Access is denied."
+[36mINFO[0m[2025-04-14 12:57:54] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4273
+[36mINFO[0m[2025-04-14 12:57:56] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3_Device2
+[31mERRO[0m[2025-04-14 12:57:56] Kết nối Modbus thất bại                       [31mdevice[0m=Schneider_PM_COM3_Device2 [31merror[0m="Access is denied."
+[36mINFO[0m[2025-04-14 12:57:58] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4327
+[36mINFO[0m[2025-04-14 12:58:01] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3_Device2
+[31mERRO[0m[2025-04-14 12:58:01] Kết nối Modbus thất bại                       [31mdevice[0m=Schneider_PM_COM3_Device2 [31merror[0m="Access is denied."
+[36mINFO[0m[2025-04-14 12:58:02] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4221
+[36mINFO[0m[2025-04-14 12:58:06] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3_Device2
+[31mERRO[0m[2025-04-14 12:58:06] Kết nối Modbus thất bại                       [31mdevice[0m=Schneider_PM_COM3_Device2 [31merror[0m="Access is denied."
+[36mINFO[0m[2025-04-14 12:58:07] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4339
+[36mINFO[0m[2025-04-14 12:58:11] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3_Device2
+[31mERRO[0m[2025-04-14 12:58:11] Kết nối Modbus thất bại                       [31mdevice[0m=Schneider_PM_COM3_Device2 [31merror[0m="Access is denied."
+[36mINFO[0m[2025-04-14 12:58:11] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4472
+[36mINFO[0m[2025-04-14 12:58:16] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4314
+[36mINFO[0m[2025-04-14 12:58:16] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3_Device2
+[31mERRO[0m[2025-04-14 12:58:16] Kết nối Modbus thất bại                       [31mdevice[0m=Schneider_PM_COM3_Device2 [31merror[0m="Access is denied."
+[36mINFO[0m[2025-04-14 12:58:20] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4252
+[36mINFO[0m[2025-04-14 12:58:21] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3_Device2
+[31mERRO[0m[2025-04-14 12:58:21] Kết nối Modbus thất bại                       [31mdevice[0m=Schneider_PM_COM3_Device2 [31merror[0m="Access is denied."
+[36mINFO[0m[2025-04-14 12:58:24] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4294
+[36mINFO[0m[2025-04-14 12:58:26] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3_Device2
+[31mERRO[0m[2025-04-14 12:58:26] Kết nối Modbus thất bại                       [31mdevice[0m=Schneider_PM_COM3_Device2 [31merror[0m="Access is denied."
+[36mINFO[0m[2025-04-14 12:58:29] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4376
+[36mINFO[0m[2025-04-14 12:58:31] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3_Device2
+[31mERRO[0m[2025-04-14 12:58:31] Kết nối Modbus thất bại                       [31mdevice[0m=Schneider_PM_COM3_Device2 [31merror[0m="Access is denied."
+[36mINFO[0m[2025-04-14 12:58:33] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4333
+[36mINFO[0m[2025-04-14 12:58:36] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3_Device2
+[31mERRO[0m[2025-04-14 12:58:36] Kết nối Modbus thất bại                       [31mdevice[0m=Schneider_PM_COM3_Device2 [31merror[0m="Access is denied."
+[36mINFO[0m[2025-04-14 12:58:37] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4286
+[36mINFO[0m[2025-04-14 12:58:41] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3_Device2
+[31mERRO[0m[2025-04-14 12:58:41] Kết nối Modbus thất bại                       [31mdevice[0m=Schneider_PM_COM3_Device2 [31merror[0m="Access is denied."
+[36mINFO[0m[2025-04-14 12:58:41] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4303
+[36mINFO[0m[2025-04-14 12:58:46] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4224
+[36mINFO[0m[2025-04-14 12:58:46] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3_Device2
+[31mERRO[0m[2025-04-14 12:58:46] Kết nối Modbus thất bại                       [31mdevice[0m=Schneider_PM_COM3_Device2 [31merror[0m="Access is denied."
+[36mINFO[0m[2025-04-14 12:58:50] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4277
+[36mINFO[0m[2025-04-14 12:58:51] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3_Device2
+[31mERRO[0m[2025-04-14 12:58:51] Kết nối Modbus thất bại                       [31mdevice[0m=Schneider_PM_COM3_Device2 [31merror[0m="Access is denied."
+[36mINFO[0m[2025-04-14 12:58:54] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4278
+[36mINFO[0m[2025-04-14 12:58:56] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3_Device2
+[31mERRO[0m[2025-04-14 12:58:56] Kết nối Modbus thất bại                       [31mdevice[0m=Schneider_PM_COM3_Device2 [31merror[0m="Access is denied."
+[36mINFO[0m[2025-04-14 12:58:58] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4280
+[36mINFO[0m[2025-04-14 12:59:01] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3_Device2
+[31mERRO[0m[2025-04-14 12:59:01] Kết nối Modbus thất bại                       [31mdevice[0m=Schneider_PM_COM3_Device2 [31merror[0m="Access is denied."
+[36mINFO[0m[2025-04-14 12:59:03] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4301
+[36mINFO[0m[2025-04-14 12:59:06] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3_Device2
+[31mERRO[0m[2025-04-14 12:59:06] Kết nối Modbus thất bại                       [31mdevice[0m=Schneider_PM_COM3_Device2 [31merror[0m="Access is denied."
+[36mINFO[0m[2025-04-14 12:59:07] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4308
+[36mINFO[0m[2025-04-14 12:59:11] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3_Device2
+[31mERRO[0m[2025-04-14 12:59:11] Kết nối Modbus thất bại                       [31mdevice[0m=Schneider_PM_COM3_Device2 [31merror[0m="Access is denied."
+[36mINFO[0m[2025-04-14 12:59:11] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4343
+[36mINFO[0m[2025-04-14 12:59:16] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4347
+[36mINFO[0m[2025-04-14 12:59:16] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3_Device2
+[31mERRO[0m[2025-04-14 12:59:16] Kết nối Modbus thất bại                       [31mdevice[0m=Schneider_PM_COM3_Device2 [31merror[0m="Access is denied."
+[36mINFO[0m[2025-04-14 12:59:20] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4298
+[36mINFO[0m[2025-04-14 12:59:21] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3_Device2
+[31mERRO[0m[2025-04-14 12:59:21] Kết nối Modbus thất bại                       [31mdevice[0m=Schneider_PM_COM3_Device2 [31merror[0m="Access is denied."
+[36mINFO[0m[2025-04-14 12:59:24] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4251
+[36mINFO[0m[2025-04-14 12:59:26] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3_Device2
+[31mERRO[0m[2025-04-14 12:59:26] Kết nối Modbus thất bại                       [31mdevice[0m=Schneider_PM_COM3_Device2 [31merror[0m="Access is denied."
+[36mINFO[0m[2025-04-14 12:59:29] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4215
+[36mINFO[0m[2025-04-14 12:59:31] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3_Device2
+[31mERRO[0m[2025-04-14 12:59:31] Kết nối Modbus thất bại                       [31mdevice[0m=Schneider_PM_COM3_Device2 [31merror[0m="Access is denied."
+[36mINFO[0m[2025-04-14 12:59:33] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4277
+[36mINFO[0m[2025-04-14 12:59:36] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3_Device2
+[31mERRO[0m[2025-04-14 12:59:36] Kết nối Modbus thất bại                       [31mdevice[0m=Schneider_PM_COM3_Device2 [31merror[0m="Access is denied."
+[33mWARN[0m[2025-04-14 12:59:36] Đã nhận tín hiệu dừng. Đang yêu cầu các goroutine kết thúc... 
+[36mINFO[0m[2025-04-14 12:59:36] Đang chờ các goroutine hoàn thành...         
+[36mINFO[0m[2025-04-14 12:59:36] Nhận tín hiệu dừng trong khi chờ kết nối lại.  [36mdevice[0m=Schneider_PM_COM3_Device2
+[36mINFO[0m[2025-04-14 12:59:37] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4338
+[36mINFO[0m[2025-04-14 12:59:41] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4296
+[36mINFO[0m[2025-04-14 12:59:46] Hoàn thành chu kỳ đọc và ghi dữ liệu          [36mdevice[0m=Schneider_PM_COM3 [36mduration_ms[0m=4265
+[36mINFO[0m[2025-04-14 12:59:46] Nhận tín hiệu dừng, kết thúc vòng lặp đọc.    [36mdevice[0m=Schneider_PM_COM3
+[36mINFO[0m[2025-04-14 12:59:46] Đang đóng kết nối Modbus...                   [36mdevice[0m=Schneider_PM_COM3
+[36mINFO[0m[2025-04-14 12:59:46] Tất cả goroutine đã dừng. Chương trình kết thúc. 
+[36mINFO[0m[2025-04-14 12:59:46] Đang đóng các file CSV...                    
+[36mINFO[0m[2025-04-14 12:59:46] Đã đóng các file CSV.                        
+[36mINFO[0m[2025-04-14 12:59:46] Đang đóng các storage data writers...        
+[36mINFO[0m[2025-04-14 12:59:46] Đã đóng các storage data writers.            

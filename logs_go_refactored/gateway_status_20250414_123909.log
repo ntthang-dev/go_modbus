@@ -1,0 +1,38 @@
+[36mINFO[0m[2025-04-14 12:39:09] --- Khởi chạy Gateway Modbus ---             
+[33mWARN[0m[2025-04-14 12:39:09] Thiết bị 'Schneider_PM_COM3' đang bị vô hiệu hóa trong cấu hình. 
+[36mINFO[0m[2025-04-14 12:39:09] Đã đọc 85 thanh ghi cho thiết bị 'Schneider_PM_COM3_Device2' 
+[36mINFO[0m[2025-04-14 12:39:09] Đã khởi chạy 1 goroutine cho các thiết bị. Nhấn Ctrl+C để dừng. 
+[36mINFO[0m[2025-04-14 12:39:09] Bắt đầu vòng lặp đọc dữ liệu...               [36mdevice[0m=Schneider_PM_COM3_Device2
+[36mINFO[0m[2025-04-14 12:39:09] Đang thử kết nối tới COM3 (Path: \\.\COM3)...  [36mdevice[0m=Schneider_PM_COM3_Device2
+[36mINFO[0m[2025-04-14 12:39:09] >>> Kết nối Modbus thành công!                [36mdevice[0m=Schneider_PM_COM3_Device2
+[33mWARN[0m[2025-04-14 12:39:15] Lỗi giao tiếp khác                            [33mdevice[0m=Schneider_PM_COM3_Device2 [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString"
+[33mWARN[0m[2025-04-14 12:39:17] Lỗi giao tiếp khác                            [33mdevice[0m=Schneider_PM_COM3_Device2 [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString"
+[33mWARN[0m[2025-04-14 12:39:19] Lỗi giao tiếp khác                            [33mdevice[0m=Schneider_PM_COM3_Device2 [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString"
+[33mWARN[0m[2025-04-14 12:39:20] Lỗi giao tiếp khác                            [33mdevice[0m=Schneider_PM_COM3_Device2 [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString"
+[33mWARN[0m[2025-04-14 12:39:22] Lỗi giao tiếp khác                            [33mdevice[0m=Schneider_PM_COM3_Device2 [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString"
+[33mWARN[0m[2025-04-14 12:39:23] Lỗi giao tiếp khác                            [33mdevice[0m=Schneider_PM_COM3_Device2 [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString"
+[33mWARN[0m[2025-04-14 12:39:25] Lỗi giao tiếp khác                            [33mdevice[0m=Schneider_PM_COM3_Device2 [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString"
+[33mWARN[0m[2025-04-14 12:39:27] Lỗi giao tiếp khác                            [33mdevice[0m=Schneider_PM_COM3_Device2 [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString"
+[33mWARN[0m[2025-04-14 12:39:28] Lỗi giao tiếp khác                            [33mdevice[0m=Schneider_PM_COM3_Device2 [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString"
+[33mWARN[0m[2025-04-14 12:39:30] Lỗi giao tiếp khác                            [33mdevice[0m=Schneider_PM_COM3_Device2 [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString"
+[33mWARN[0m[2025-04-14 12:39:31] Lỗi giao tiếp khác                            [33mdevice[0m=Schneider_PM_COM3_Device2 [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString"
+[33mWARN[0m[2025-04-14 12:39:33] Lỗi giao tiếp khác                            [33mdevice[0m=Schneider_PM_COM3_Device2 [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString"
+[33mWARN[0m[2025-04-14 12:39:35] Lỗi giao tiếp khác                            [33mdevice[0m=Schneider_PM_COM3_Device2 [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString"
+[33mWARN[0m[2025-04-14 12:39:36] Lỗi giao tiếp khác                            [33mdevice[0m=Schneider_PM_COM3_Device2 [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString"
+[33mWARN[0m[2025-04-14 12:39:38] Lỗi giao tiếp khác                            [33mdevice[0m=Schneider_PM_COM3_Device2 [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString"
+[33mWARN[0m[2025-04-14 12:39:39] Lỗi giao tiếp khác                            [33mdevice[0m=Schneider_PM_COM3_Device2 [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString"
+[33mWARN[0m[2025-04-14 12:39:41] Lỗi giao tiếp khác                            [33mdevice[0m=Schneider_PM_COM3_Device2 [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString"
+[33mWARN[0m[2025-04-14 12:39:43] Lỗi giao tiếp khác                            [33mdevice[0m=Schneider_PM_COM3_Device2 [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString"
+[33mWARN[0m[2025-04-14 12:39:44] Lỗi giao tiếp khác                            [33mdevice[0m=Schneider_PM_COM3_Device2 [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString"
+[33mWARN[0m[2025-04-14 12:39:46] Lỗi giao tiếp khác                            [33mdevice[0m=Schneider_PM_COM3_Device2 [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString"
+[33mWARN[0m[2025-04-14 12:39:47] Lỗi giao tiếp khác                            [33mdevice[0m=Schneider_PM_COM3_Device2 [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString"
+[33mWARN[0m[2025-04-14 12:39:49] Lỗi giao tiếp khác                            [33mdevice[0m=Schneider_PM_COM3_Device2 [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString"
+[33mWARN[0m[2025-04-14 12:39:50] Lỗi giao tiếp khác                            [33mdevice[0m=Schneider_PM_COM3_Device2 [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString"
+[33mWARN[0m[2025-04-14 12:39:51] Đã nhận tín hiệu dừng. Đang yêu cầu các goroutine kết thúc... 
+[36mINFO[0m[2025-04-14 12:39:51] Đang chờ các goroutine hoàn thành...         
+[33mWARN[0m[2025-04-14 12:39:52] Lỗi giao tiếp khác                            [33mdevice[0m=Schneider_PM_COM3_Device2 [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString"
+[33mWARN[0m[2025-04-14 12:39:54] Lỗi giao tiếp khác                            [33mdevice[0m=Schneider_PM_COM3_Device2 [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString"
+[33mWARN[0m[2025-04-14 12:39:55] Lỗi giao tiếp khác                            [33mdevice[0m=Schneider_PM_COM3_Device2 [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString"
+[33mWARN[0m[2025-04-14 12:39:57] Lỗi giao tiếp khác                            [33mdevice[0m=Schneider_PM_COM3_Device2 [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString"
+[33mWARN[0m[2025-04-14 12:39:58] Lỗi giao tiếp khác                            [33mdevice[0m=Schneider_PM_COM3_Device2 [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString"
+[33mWARN[0m[2025-04-14 12:40:00] Lỗi giao tiếp khác                            [33mdevice[0m=Schneider_PM_COM3_Device2 [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString"
