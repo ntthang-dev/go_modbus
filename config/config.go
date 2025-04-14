@@ -1,3 +1,4 @@
+// Package config xử lý việc đọc và xác thực cấu hình ứng dụng.
 package config
 
 import (
@@ -36,18 +37,15 @@ type ConnectionConfig struct {
 type DeviceConfig struct {
 	Name              string            `yaml:"name"`
 	Enabled           bool              `yaml:"enabled"`
-	Tags              map[string]string `yaml:"tags"`
+	Tags              map[string]string `yaml:"tags"` // Thêm tags tùy chỉnh
 	Connection        ConnectionConfig  `yaml:"connection"`
 	PollingIntervalMs int               `yaml:"polling_interval_ms"`
 	RegisterListFile  string            `yaml:"register_list_file"` // Đường dẫn file CSV
 }
 
-// *** BỎ InfluxDBConfig ***
-// type InfluxDBConfig struct { ... }
-
-// StorageConfig cấu hình các backend lưu trữ (hiện không có gì đặc biệt)
+// StorageConfig (Hiện tại trống, có thể thêm cấu hình SQL...)
 type StorageConfig struct {
-	// InfluxDB InfluxDBConfig `yaml:"influxdb"` // Bỏ cấu hình InfluxDB
+	// InfluxDB InfluxDBConfig `yaml:"influxdb"` // Bỏ qua InfluxDB
 }
 
 // LoggingConfig cấu hình logging chung
@@ -60,7 +58,7 @@ type LoggingConfig struct {
 // Config là cấu trúc tổng
 type Config struct {
 	Logging LoggingConfig  `yaml:"logging"`
-	Storage StorageConfig  `yaml:"storage"` // Giữ lại struct dù trống
+	Storage StorageConfig  `yaml:"storage"`
 	Devices []DeviceConfig `yaml:"devices"`
 }
 
@@ -100,7 +98,7 @@ func LoadConfig(filePath string) (*Config, error) {
 		if dev.PollingIntervalMs <= 0 {
 			dev.PollingIntervalMs = 1000
 		}
-		if dev.RegisterListFile == "" && dev.Enabled { // Chỉ cảnh báo nếu device được enable
+		if dev.RegisterListFile == "" && dev.Enabled {
 			fmt.Printf("CẢNH BÁO: Thiết bị '%s' được kích hoạt nhưng thiếu 'register_list_file'.\n", dev.Name)
 		}
 	}
@@ -116,11 +114,10 @@ func LoadRegistersFromCSV(filePath string) ([]RegisterInfo, error) {
 	defer csvFile.Close()
 
 	reader := csv.NewReader(csvFile)
-	header, err := reader.Read() // Đọc header
+	header, err := reader.Read()
 	if err != nil {
 		return nil, fmt.Errorf("lỗi đọc header file CSV '%s': %w", filePath, err)
 	}
-	// Tìm index của các cột cần thiết (linh hoạt hơn với thứ tự cột)
 	colIndex := make(map[string]int)
 	for i, h := range header {
 		colIndex[strings.TrimSpace(h)] = i
@@ -140,7 +137,7 @@ func LoadRegistersFromCSV(filePath string) ([]RegisterInfo, error) {
 	var registers []RegisterInfo
 	for i, record := range records {
 		lineNumber := i + 2
-		if len(record) != len(header) { // Kiểm tra số cột khớp header
+		if len(record) != len(header) {
 			fmt.Printf("Cảnh báo: File CSV '%s' dòng %d: số cột (%d) không khớp header (%d). Bỏ qua dòng.\n", filePath, lineNumber, len(record), len(header))
 			continue
 		}
@@ -151,12 +148,8 @@ func LoadRegistersFromCSV(filePath string) ([]RegisterInfo, error) {
 		reg.Type = strings.TrimSpace(strings.ToUpper(record[colIndex["Type"]]))
 		lenStr := strings.TrimSpace(record[colIndex["Length"]])
 
-		if reg.Name == "" {
-			fmt.Printf("Cảnh báo: File CSV '%s' dòng %d: Name trống. Bỏ qua.\n", filePath, lineNumber)
-			continue
-		}
-		if reg.Type == "" {
-			fmt.Printf("Cảnh báo: File CSV '%s' dòng %d: Type trống. Bỏ qua.\n", filePath, lineNumber)
+		if reg.Name == "" || reg.Type == "" || addrStr == "" || lenStr == "" {
+			fmt.Printf("Cảnh báo: File CSV '%s' dòng %d: thiếu thông tin cột (Name, Address, Type, Length). Bỏ qua.\n", filePath, lineNumber)
 			continue
 		}
 
@@ -172,16 +165,17 @@ func LoadRegistersFromCSV(filePath string) ([]RegisterInfo, error) {
 			fmt.Printf("Cảnh báo: File CSV '%s' dòng %d: Length '%s' không hợp lệ. Bỏ qua.\n", filePath, lineNumber, lenStr)
 			continue
 		}
-		if lenVal == 0 {
+		reg.Length = uint16(lenVal)
+
+		// Gán Length=1 nếu là 0 cho các kiểu đơn giản
+		if reg.Length == 0 {
 			switch reg.Type {
-			case "FLOAT32", "INT32U", "INT32", "DATETIME", "INT64", "FLOAT64", "UTF8": // Các kiểu cần Length > 0
+			case "FLOAT32", "INT32U", "INT32", "DATETIME", "INT64", "FLOAT64", "UTF8":
 				fmt.Printf("Cảnh báo: File CSV '%s' dòng %d: Length=0 không hợp lệ cho kiểu %s. Bỏ qua.\n", filePath, lineNumber, reg.Type)
 				continue
-			default: // Các kiểu 1 thanh ghi
+			default:
 				reg.Length = 1
 			}
-		} else {
-			reg.Length = uint16(lenVal)
 		}
 		registers = append(registers, reg)
 	}

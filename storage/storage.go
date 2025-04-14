@@ -6,19 +6,13 @@ import (
 	"strings"
 	"time"
 
-	// !!! THAY 'testmod' bằng tên module của bạn !!!
-	"testmod/config"
+	// !!! THAY 'modbus_register_slave' bằng tên module của bạn !!!
+	"modbus_register_slave/config"
 )
 
 // DataWriter là interface chung cho các backend lưu trữ dữ liệu Modbus.
 type DataWriter interface {
-	// WriteData ghi một tập dữ liệu đọc được từ thiết bị.
-	// deviceName: Tên định danh của thiết bị (từ config).
-	// deviceTags: Các tag tùy chỉnh cho thiết bị (từ config).
-	// data: Map chứa tên thanh ghi và giá trị đã giải mã (hoặc lỗi).
-	// timestamp: Thời điểm dữ liệu được đọc.
 	WriteData(deviceName string, deviceTags map[string]string, data map[string]interface{}, timestamp time.Time) error
-	// Close dùng để đóng kết nối hoặc giải phóng tài nguyên.
 	Close() error
 }
 
@@ -68,12 +62,12 @@ func (mw *MultiWriter) Close() error {
 	return firstErr
 }
 
+// *** GIỮ LẠI HÀM NÀY Ở ĐÂY VÀ ĐẢM BẢO NÓ ĐƯỢC EXPORT (Viết hoa chữ S) ***
 // SanitizeValue xử lý các giá trị đặc biệt (NaN, Inf) và lỗi dạng chuỗi.
-// Trả về giá trị đã làm sạch hoặc nil nếu không hợp lệ để lưu trữ/log.
 func SanitizeValue(value interface{}) interface{} {
 	if strVal, ok := value.(string); ok {
 		if strings.Contains(strVal, "ERROR") || strings.Contains(strVal, "INVALID") || strings.Contains(strVal, "N/A_") {
-			return nil // Không lưu các giá trị lỗi/N/A vào DB/structured log fields
+			return nil
 		}
 	}
 	switch v := value.(type) {

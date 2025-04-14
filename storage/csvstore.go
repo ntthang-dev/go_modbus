@@ -6,13 +6,13 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"path/filepath"
+	"path/filepath" // Cần để sắp xếp header nếu muốn
 	"strings"
 	"sync"
 	"time"
 
-	// !!! THAY 'testmod' bằng tên module của bạn !!!
-	"testmod/config"
+	// !!! THAY 'modbus_register_slave' bằng tên module của bạn !!!
+	"modbus_register_slave/config"
 
 	"github.com/sirupsen/logrus"
 )
@@ -26,14 +26,13 @@ type CsvWriter struct {
 	mu       sync.Mutex
 }
 
-// NewCsvWriter tạo một CsvWriter mới.
-// Cần truyền vào danh sách RegisterInfo gốc để đảm bảo thứ tự cột header.
+// NewCsvWriter tạo một CsvWriter mới cho một thiết bị cụ thể.
 func NewCsvWriter(enable bool, logDir string, deviceName string, registers []config.RegisterInfo) (*CsvWriter, error) {
 	if !enable {
 		return nil, nil
 	}
 	if len(registers) == 0 {
-		return nil, fmt.Errorf("danh sách thanh ghi rỗng, không thể tạo CSV writer")
+		return nil, fmt.Errorf("danh sách thanh ghi rỗng, không thể tạo CSV writer cho '%s'", deviceName)
 	}
 
 	ts := time.Now().Format("20060102_150405")
@@ -47,6 +46,7 @@ func NewCsvWriter(enable bool, logDir string, deviceName string, registers []con
 	}
 
 	writer := csv.NewWriter(file)
+	// Tạo header dựa trên thứ tự trong []RegisterInfo
 	headers := []string{"Timestamp"}
 	for _, reg := range registers {
 		headers = append(headers, reg.Name)
@@ -80,7 +80,7 @@ func (cw *CsvWriter) WriteData(deviceName string, deviceTags map[string]string, 
 				row[i] = "MISSING"
 			} else {
 				row[i] = fmt.Sprintf("%v", value)
-			} // fmt xử lý NaN/Inf
+			}
 		}
 	}
 
@@ -110,3 +110,6 @@ func (cw *CsvWriter) Close() error {
 	}
 	return nil
 }
+
+// --- Cần import sort nếu muốn sắp xếp header theo tên ---
+//  _ = sort.Strings // Dummy use
