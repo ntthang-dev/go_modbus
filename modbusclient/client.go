@@ -6,6 +6,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"math"
+	"math/rand" // Cần cho Jitter
 	"net"
 	"os"
 	"strconv"
@@ -13,135 +14,71 @@ import (
 	"sync"
 	"time"
 
-	// !!! THAY 'testmod' bằng tên module của bạn !!!
-	"testmod/config"
-	"testmod/storage"
+	// !!! THAY 'modbus_register_slave' bằng tên module của bạn !!!
+	"modbus_register_slave/config"
+	"modbus_register_slave/portmanager"
+	"modbus_register_slave/storage"
 
 	"github.com/goburrow/modbus"
 	"github.com/sirupsen/logrus"
 )
 
-// Device đại diện cho một thiết bị Modbus cần giám sát.
+// Device đại diện cho một thiết bị Modbus logic (theo Slave ID).
 type Device struct {
-	config    config.DeviceConfig   // Cấu hình của thiết bị
-	registers []config.RegisterInfo // Danh sách thanh ghi đã đọc từ file CSV
-	handler   *modbus.RTUClientHandler
-	client    modbus.Client
-	writer    storage.DataWriter // Interface để ghi dữ liệu (có thể là MultiWriter)
-	statusLog *logrus.Entry      // Logger riêng cho trạng thái/lỗi
-	mu        sync.Mutex         // Bảo vệ truy cập client/handler
+	config      config.DeviceConfig
+	registers   []config.RegisterInfo
+	writer      storage.DataWriter
+	statusLog   *logrus.Entry
+	requestChan chan<- portmanager.ModbusRequest
+	mu          sync.Mutex
 }
 
 // NewDevice tạo một đối tượng Device mới.
-func NewDevice(cfg config.DeviceConfig, regs []config.RegisterInfo, writer storage.DataWriter, statusLogger *logrus.Logger) *Device {
-	logger := statusLogger.WithField("device", cfg.Name) // Thêm context vào logger
-	return &Device{config: cfg, registers: regs, writer: writer, statusLog: logger}
-}
-
-// Connect thiết lập kết nối Modbus RTU.
-func (d *Device) Connect() error {
-	d.mu.Lock()
-	defer d.mu.Unlock()
-	if strings.ToLower(d.config.Connection.Type) != "rtu" {
-		return fmt.Errorf("loại kết nối '%s' không được hỗ trợ", d.config.Connection.Type)
+func NewDevice(cfg config.DeviceConfig, regs []config.RegisterInfo, writer storage.DataWriter, statusLogger *logrus.Logger, reqChan chan<- portmanager.ModbusRequest) *Device {
+	logger := statusLogger.WithField("device", cfg.Name)
+	for k, v := range cfg.Tags {
+		logger = logger.WithField(fmt.Sprintf("tag_%s", k), v)
 	}
-
-	windowsPortPath := d.config.Connection.GetWindowsPortPath()
-	d.statusLog.Infof("Đang thử kết nối tới %s (Path: %s)...", d.config.Connection.Port, windowsPortPath)
-
-	if d.handler == nil { // Chỉ khởi tạo lần đầu
-		d.handler = modbus.NewRTUClientHandler(windowsPortPath)
-		d.handler.BaudRate = d.config.Connection.BaudRate
-		d.handler.DataBits = d.config.Connection.DataBits
-		d.handler.Parity = d.config.Connection.Parity
-		d.handler.StopBits = d.config.Connection.StopBits
-		d.handler.SlaveId = d.config.Connection.SlaveID
-		d.handler.Timeout = d.config.Connection.GetTimeout()
-	} else { // Cập nhật lại thông số nếu cần (ví dụ khi reload config)
-		d.handler.SlaveId = d.config.Connection.SlaveID
-		d.handler.Timeout = d.config.Connection.GetTimeout()
-		// Lưu ý: Thay đổi các thông số serial khác (baud, parity...) sau khi đã tạo handler có thể không hiệu quả
-		// Cần tạo handler mới nếu các thông số đó thay đổi.
-	}
-
-	err := d.handler.Connect()
-	if err != nil {
-		d.statusLog.WithError(err).Error("Kết nối Modbus thất bại")
-		d.client = nil
-		return err
-	}
-	if d.client == nil {
-		d.client = modbus.NewClient(d.handler)
-	}
-	d.statusLog.Info(">>> Kết nối Modbus thành công!")
-	return nil
-}
-
-// Close đóng kết nối Modbus.
-func (d *Device) Close() error {
-	d.mu.Lock()
-	defer d.mu.Unlock()
-	if d.handler != nil {
-		d.statusLog.Info("Đang đóng kết nối Modbus...")
-		// d.client = nil // Đặt client về nil
-		// Thư viện goburrow không có IsClose() công khai, cứ gọi Close()
-		return d.handler.Close()
-	}
-	return nil
+	return &Device{config: cfg, registers: regs, writer: writer, statusLog: logger, requestChan: reqChan}
 }
 
 // RunPollingLoop là vòng lặp chính để đọc dữ liệu định kỳ.
 func (d *Device) RunPollingLoop(ctx context.Context, wg *sync.WaitGroup) {
 	defer wg.Done()
 	d.statusLog.Info("Bắt đầu vòng lặp đọc dữ liệu...")
-	ticker := time.NewTicker(d.config.GetPollingInterval())
+	jitter := time.Duration(rand.Intn(200)) * time.Millisecond
+	initialDelay := 100*time.Millisecond + jitter
+	time.Sleep(initialDelay)
+	ticker := time.NewTicker(d.config.GetPollingInterval() + jitter)
 	defer ticker.Stop()
 
 	for {
-		// Thử kết nối nếu client đang nil
-		d.mu.Lock()
-		clientNeedsConnect := (d.client == nil)
-		d.mu.Unlock()
-		if clientNeedsConnect {
-			if err := d.Connect(); err != nil {
-				// Lỗi đã log, đợi lần tick sau
-				select {
-				case <-time.After(5 * time.Second): // Đợi 5s trước khi thử lại ngay lập tức
-					continue
-				case <-ctx.Done():
-					d.statusLog.Info("Nhận tín hiệu dừng trong khi chờ kết nối lại.")
-					return
-				}
-			}
-		}
-
-		// Chờ ticker hoặc tín hiệu dừng
 		select {
 		case <-ctx.Done():
 			d.statusLog.Info("Nhận tín hiệu dừng, kết thúc vòng lặp đọc.")
-			d.Close()
 			return
 		case <-ticker.C:
-			d.mu.Lock() // Lock để lấy client
-			currentClient := d.client
-			d.mu.Unlock()
-
-			if currentClient == nil {
-				d.statusLog.Warn("Bỏ qua chu kỳ đọc vì client là nil (đang chờ kết nối lại).")
-				continue
-			}
-
 			startTime := time.Now()
-			data := d.readAllRegisters(currentClient) // Gọi hàm đọc
+			data := d.readAllRegistersViaManager(ctx) // Gọi hàm đọc qua Port Manager
 			readDuration := time.Since(startTime)
 
-			if d.writer != nil {
+			if data != nil && d.writer != nil {
 				err := d.writer.WriteData(d.config.Name, d.config.Tags, data, startTime)
 				if err != nil {
 					d.statusLog.WithError(err).Error("Lỗi khi ghi dữ liệu bằng DataWriter")
 				} else {
-					d.statusLog.WithField("duration_ms", readDuration.Milliseconds()).Info("Hoàn thành chu kỳ đọc và ghi dữ liệu")
+					errorCount := 0
+					for _, v := range data {
+						if strVal, ok := v.(string); ok {
+							if strings.Contains(strVal, "ERROR") || strings.Contains(strVal, "INVALID") || strings.Contains(strVal, "N/A_") {
+								errorCount++
+							}
+						}
+					}
+					d.statusLog.WithFields(logrus.Fields{"duration_ms": readDuration.Milliseconds(), "errors": errorCount}).Info("Hoàn thành chu kỳ đọc và ghi dữ liệu")
 				}
+			} else if data == nil {
+				d.statusLog.Warn("Chu kỳ đọc bị hủy, không ghi dữ liệu.")
 			} else {
 				d.statusLog.Warn("Không có DataWriter nào được cấu hình để ghi dữ liệu.")
 			}
@@ -149,16 +86,65 @@ func (d *Device) RunPollingLoop(ctx context.Context, wg *sync.WaitGroup) {
 	}
 }
 
-// readAllRegisters đọc tất cả thanh ghi được định nghĩa.
-func (d *Device) readAllRegisters(client modbus.Client) map[string]interface{} {
+// readAllRegistersViaManager gửi yêu cầu đọc tuần tự tới Port Manager
+func (d *Device) readAllRegistersViaManager(ctx context.Context) map[string]interface{} {
 	results := make(map[string]interface{})
 	if len(d.registers) == 0 {
 		return results
 	}
-
 	addressBase := d.config.Connection.AddressBase
 
+	fmt.Printf("\n==================== Đọc thiết bị %s (%s) ====================\n", d.config.Name, time.Now().Format("15:04:05"))
+	currentGroupForConsole := ""
+
 	for _, regInfo := range d.registers {
+		// --- Logic in header nhóm console ---
+		groupGuess := regInfo.Name
+		if idx := strings.Index(regInfo.Name, "_"); idx > 0 {
+			groupGuess = regInfo.Name[:idx]
+			if strings.HasPrefix(regInfo.Name, "PF_") || strings.HasPrefix(regInfo.Name, "DPF_") {
+				groupGuess = "PowerFactor"
+			}
+			if strings.HasPrefix(regInfo.Name, "AE_") || strings.HasPrefix(regInfo.Name, "RE_") || strings.HasPrefix(regInfo.Name, "APE_") {
+				groupGuess = "Energy(Inst)"
+			}
+			if strings.HasPrefix(regInfo.Name, "Accum_") {
+				groupGuess = "Energy(Accum)"
+			}
+			if strings.HasPrefix(regInfo.Name, "RS485_") || strings.HasPrefix(regInfo.Name, "Pwr_Dem_") || strings.HasPrefix(regInfo.Name, "Cur_Dem_") {
+				groupGuess = "Settings"
+			}
+			if strings.HasPrefix(regInfo.Name, "Meter_") || strings.HasPrefix(regInfo.Name, "Manufacturer") {
+				groupGuess = "Device Info"
+			}
+			if strings.HasSuffix(regInfo.Name, "_7reg") || strings.HasPrefix(regInfo.Name, "Peak_Demand_") {
+				groupGuess = "Date/Time"
+			}
+			if strings.HasPrefix(regInfo.Name, "Voltage_Unbalance") {
+				groupGuess = "Voltage Unbalance"
+			}
+			if strings.HasPrefix(regInfo.Name, "Current_Unbalance") {
+				groupGuess = "Current Unbalance"
+			}
+		} else if regInfo.Name == "Frequency" {
+			groupGuess = "Frequency"
+		}
+		if groupGuess != currentGroupForConsole {
+			if currentGroupForConsole != "" {
+				fmt.Println("------------------------------------------")
+			}
+			fmt.Printf("--- %s ---\n", groupGuess)
+			currentGroupForConsole = groupGuess
+		}
+		// --- Kết thúc logic nhóm console ---
+
+		select {
+		case <-ctx.Done():
+			d.statusLog.Info("Context bị hủy trong quá trình đọc thanh ghi.")
+			return nil
+		default:
+		}
+
 		address_1based := regInfo.Address
 		readCount := regInfo.Length
 		if address_1based < uint16(addressBase) {
@@ -168,50 +154,103 @@ func (d *Device) readAllRegisters(client modbus.Client) map[string]interface{} {
 		}
 		address_0based := address_1based - uint16(addressBase)
 
-		d.statusLog.WithFields(logrus.Fields{
-			"register_name": regInfo.Name, "address_1based": address_1based, "address_0based": address_0based,
-			"count_regs": readCount, "data_type": regInfo.Type,
-		}).Debug("Chuẩn bị đọc thanh ghi/cụm")
+		d.statusLog.WithFields(logrus.Fields{"register_name": regInfo.Name, "address_0based": address_0based, "count_regs": readCount}).Debug("Chuẩn bị gửi yêu cầu đọc tới Port Manager")
 
-		var readBytes []byte
-		var err error
-		// *** TODO: Thêm logic chọn hàm đọc dựa vào regInfo.RegisterType nếu cấu hình hỗ trợ ***
-		// Hiện tại chỉ đọc Holding Registers
-		readBytes, err = client.ReadHoldingRegisters(address_0based, readCount)
+		replyChan := make(chan portmanager.ModbusResponse, 1)
+		request := portmanager.ModbusRequest{
+			SlaveID: d.config.Connection.SlaveID, IsWrite: false,
+			Address: address_0based, Quantity: readCount,
+			FunctionCode: 3, // Mặc định đọc Holding Register
+			ReplyChan:    replyChan,
+		}
 
-		if err != nil {
-			d.handleModbusError(err)
-			results[regInfo.Name] = "READ_ERROR"
-			time.Sleep(50 * time.Millisecond)
-			continue
+		var decodedValue interface{} = "INIT_ERROR"
+		select {
+		case d.requestChan <- request:
+			replyTimeout := d.config.Connection.GetTimeout() + 1000*time.Millisecond
+			select {
+			case response := <-replyChan:
+				if response.Err != nil {
+					d.handleModbusError(response.Err)
+					decodedValue = "READ_ERROR"
+				} else {
+					expectedBytes := int(readCount) * 2
+					if len(response.Result) != expectedBytes {
+						d.statusLog.WithFields(logrus.Fields{"register_name": regInfo.Name, "received_bytes": len(response.Result), "expected_bytes": expectedBytes}).Error("Lỗi độ dài dữ liệu đọc (từ Port Manager)")
+						decodedValue = "LENGTH_ERROR"
+					} else {
+						var decodeErr error
+						decodedValue, decodeErr = d.decodeBytes(response.Result, regInfo)
+						if decodeErr != nil {
+							d.statusLog.WithError(decodeErr).WithFields(logrus.Fields{"register_name": regInfo.Name, "raw_bytes_hex": fmt.Sprintf("%x", response.Result)}).Error("Lỗi giải mã thanh ghi")
+							decodedValue = "DECODE_ERROR"
+						}
+					}
+				}
+			case <-time.After(replyTimeout):
+				d.statusLog.WithFields(logrus.Fields{"register_name": regInfo.Name, "timeout_ms": replyTimeout.Milliseconds()}).Error("Timeout khi chờ phản hồi từ Port Manager")
+				decodedValue = "MANAGER_TIMEOUT"
+			case <-ctx.Done():
+				d.statusLog.Warnf("Bị hủy khi đang chờ phản hồi cho thanh ghi %s", regInfo.Name)
+				decodedValue = "CANCELLED"
+				return nil
+			}
+		case <-ctx.Done():
+			d.statusLog.Warnf("Bị hủy trước khi gửi yêu cầu đọc thanh ghi %s", regInfo.Name)
+			decodedValue = "CANCELLED"
+			return nil
+		case <-time.After(2 * time.Second):
+			d.statusLog.Warnf("Timeout khi gửi yêu cầu đọc thanh ghi %s vào channel của Port Manager", regInfo.Name)
+			decodedValue = "CHANNEL_TIMEOUT"
 		}
-		expectedBytes := int(readCount) * 2
-		if len(readBytes) != expectedBytes {
-			d.statusLog.WithFields(logrus.Fields{
-				"register_name": regInfo.Name, "address_0based": address_0based, "count_regs": readCount,
-				"received_bytes": len(readBytes), "expected_bytes": expectedBytes,
-			}).Error("Lỗi độ dài dữ liệu đọc")
-			results[regInfo.Name] = "LENGTH_ERROR"
-			continue
+
+		results[regInfo.Name] = decodedValue
+		displayValue := "ERROR_STATE"
+		prefix := ""
+		isErrorOrNA := false
+		if strVal, isString := decodedValue.(string); isString {
+			if strings.Contains(strVal, "ERROR") || strings.Contains(strVal, "INVALID") || strings.Contains(strVal, "N/A_") || strings.Contains(strVal, "TIMEOUT") || strings.Contains(strVal, "CANCELLED") {
+				prefix = "[LỖI/NA] "
+				isErrorOrNA = true
+			}
 		}
-		decodedValue, decodeErr := d.decodeBytes(readBytes, regInfo)
-		if decodeErr != nil {
-			d.statusLog.WithError(decodeErr).WithFields(logrus.Fields{
-				"register_name": regInfo.Name, "raw_bytes_hex": fmt.Sprintf("%x", readBytes),
-			}).Error("Lỗi giải mã thanh ghi")
-			results[regInfo.Name] = "DECODE_ERROR"
+		switch v := decodedValue.(type) {
+		case float32:
+			fv64 := float64(v)
+			if math.IsNaN(fv64) || math.IsInf(fv64, 0) {
+				prefix = "[NaN] "
+				isErrorOrNA = true
+			}
+		case float64:
+			if math.IsNaN(v) || math.IsInf(v, 0) {
+				prefix = "[NaN] "
+				isErrorOrNA = true
+			}
+		}
+		if isErrorOrNA {
+			displayValue = fmt.Sprintf("%v", decodedValue)
 		} else {
-			results[regInfo.Name] = decodedValue
+			switch v := decodedValue.(type) {
+			case float32:
+				displayValue = fmt.Sprintf("%.4f", v)
+			case float64:
+				displayValue = fmt.Sprintf("%.4f", v)
+			case string:
+				displayValue = fmt.Sprintf("%q", v)
+			default:
+				displayValue = fmt.Sprintf("%v", v)
+			}
 		}
-		time.Sleep(20 * time.Millisecond)
+		fmt.Printf("%-30s: %s%s\n", regInfo.Name, prefix, displayValue)
 	}
+	fmt.Println("==================================================================")
 	return results
 }
 
 // decodeBytes giải mã dữ liệu byte dựa trên RegisterInfo.
 func (d *Device) decodeBytes(data []byte, regInfo config.RegisterInfo) (interface{}, error) {
 	byteOrder := binary.BigEndian
-	d.statusLog.WithFields(logrus.Fields{ // Dùng statusLog cho debug giải mã
+	d.statusLog.WithFields(logrus.Fields{
 		"register_name": regInfo.Name, "data_type": regInfo.Type,
 		"raw_bytes_hex": fmt.Sprintf("%x", data), "byte_length": len(data),
 	}).Debug("Giải mã dữ liệu thanh ghi")
@@ -223,7 +262,8 @@ func (d *Device) decodeBytes(data []byte, regInfo config.RegisterInfo) (interfac
 		}
 		bits := byteOrder.Uint32(data)
 		if bits == 0xFFC00000 {
-			return "N/A_FLOAT32", nil
+			d.statusLog.WithFields(logrus.Fields{"register_name": regInfo.Name}).Warn("Giá trị N/A (0xFFC00000) được trả về cho FLOAT32")
+			return float32(0.0), nil
 		}
 		return math.Float32frombits(bits), nil
 	case "INT16U":
@@ -232,7 +272,8 @@ func (d *Device) decodeBytes(data []byte, regInfo config.RegisterInfo) (interfac
 		}
 		val := byteOrder.Uint16(data)
 		if val == 0xFFFF {
-			return "N/A_INT16U", nil
+			d.statusLog.WithFields(logrus.Fields{"register_name": regInfo.Name}).Warn("Giá trị N/A (0xFFFF) được trả về cho INT16U")
+			return uint16(0), nil
 		}
 		return val, nil
 	case "INT16":
@@ -241,7 +282,8 @@ func (d *Device) decodeBytes(data []byte, regInfo config.RegisterInfo) (interfac
 		}
 		val := byteOrder.Uint16(data)
 		if val == 0x8000 {
-			return "N/A_INT16", nil
+			d.statusLog.WithFields(logrus.Fields{"register_name": regInfo.Name}).Warn("Giá trị N/A (0x8000) được trả về cho INT16")
+			return int16(0), nil
 		}
 		return int16(val), nil
 	case "INT32U":
@@ -250,7 +292,8 @@ func (d *Device) decodeBytes(data []byte, regInfo config.RegisterInfo) (interfac
 		}
 		val := byteOrder.Uint32(data)
 		if val == 0xFFFFFFFF {
-			return "N/A_INT32U", nil
+			d.statusLog.WithFields(logrus.Fields{"register_name": regInfo.Name}).Warn("Giá trị N/A (0xFFFFFFFF) được trả về cho INT32U")
+			return uint32(0), nil
 		}
 		return val, nil
 	case "INT32":
@@ -259,7 +302,8 @@ func (d *Device) decodeBytes(data []byte, regInfo config.RegisterInfo) (interfac
 		}
 		val := byteOrder.Uint32(data)
 		if val == 0x80000000 {
-			return "N/A_INT32", nil
+			d.statusLog.WithFields(logrus.Fields{"register_name": regInfo.Name}).Warn("Giá trị N/A (0x80000000) được trả về cho INT32")
+			return int32(0), nil
 		}
 		return int32(val), nil
 	case "INT64":
@@ -268,7 +312,8 @@ func (d *Device) decodeBytes(data []byte, regInfo config.RegisterInfo) (interfac
 		}
 		val := byteOrder.Uint64(data)
 		if val == 0x8000000000000000 {
-			return "N/A_INT64", nil
+			d.statusLog.WithFields(logrus.Fields{"register_name": regInfo.Name}).Warn("Giá trị N/A (0x8000...) được trả về cho INT64")
+			return int64(0), nil
 		}
 		return int64(val), nil
 	case "FLOAT64":
@@ -277,7 +322,8 @@ func (d *Device) decodeBytes(data []byte, regInfo config.RegisterInfo) (interfac
 		}
 		bits := byteOrder.Uint64(data)
 		if bits == 0xFFF8000000000000 {
-			return "N/A_FLOAT64", nil
+			d.statusLog.WithFields(logrus.Fields{"register_name": regInfo.Name}).Warn("Giá trị N/A (0xFFF8...) được trả về cho FLOAT64")
+			return float64(0.0), nil
 		}
 		return math.Float64frombits(bits), nil
 	case "UTF8":
@@ -309,6 +355,19 @@ func (d *Device) decodeBytes(data []byte, regInfo config.RegisterInfo) (interfac
 			return "INVALID_UTF8_DATA", nil
 		}
 		decodedString := strings.TrimRight(string(data), "\x00")
+		if len(decodedString) == 0 && len(data) > 0 {
+			allZeros := true
+			for _, b := range data {
+				if b != 0x00 {
+					allZeros = false
+					break
+				}
+			}
+			if allZeros {
+				d.statusLog.WithFields(logrus.Fields{"register_name": regInfo.Name}).Warn("Giá trị N/A (0x00) được trả về cho UTF8")
+				return "", nil
+			}
+		}
 		if strings.ContainsRune(decodedString, '\uFFFD') {
 			d.statusLog.WithFields(logrus.Fields{"register_name": regInfo.Name, "raw_bytes_hex": fmt.Sprintf("%x", data), "decoded_string": decodedString}).Warn("Chuỗi UTF8 giải mã có thể chứa ký tự không hợp lệ")
 		}
@@ -318,7 +377,8 @@ func (d *Device) decodeBytes(data []byte, regInfo config.RegisterInfo) (interfac
 			return nil, fmt.Errorf("DATETIME IEC 870-5-4 cần 8 bytes, nhận %d", len(data))
 		}
 		if byteOrder.Uint64(data) == 0xFFFFFFFFFFFFFFFF {
-			return "N/A_DATETIME", nil
+			d.statusLog.WithFields(logrus.Fields{"register_name": regInfo.Name}).Warn("Giá trị N/A (0xFFFF...) được trả về cho DATETIME")
+			return "", nil
 		}
 		word1 := byteOrder.Uint16(data[0:2])
 		word2 := byteOrder.Uint16(data[2:4])
@@ -338,8 +398,37 @@ func (d *Device) decodeBytes(data []byte, regInfo config.RegisterInfo) (interfac
 		}
 		dt := time.Date(year, time.Month(month), day, hour, minute, 0, millisecond*1000000, time.Local)
 		return dt.Format("2006-01-02 15:04:00.000"), nil
-	// Bỏ CUSTOM_PF vì đã đổi thành FLOAT32 trong danh sách thanh ghi
-	// case "CUSTOM_PF": ...
+
+	// *** THÊM LẠI CASE CUSTOM_PF ***
+	case "4Q_FP_PF": // Tên kiểu dữ liệu từ nhà sản xuất
+		// Đọc 4 bytes (Length=2) nhưng chỉ giải mã 2 byte đầu theo logic cũ
+		if len(data) != 4 {
+			return nil, fmt.Errorf("4Q_FP_PF cần 4 bytes (Length=2), nhận %d", len(data))
+		}
+		rawValue := byteOrder.Uint16(data[0:2])
+		signedValue := int16(rawValue)
+		// !!! GIẢ ĐỊNH SCALING FACTOR - CẦN KIỂM TRA LẠI VỚI THỰC TẾ !!!
+		scalingFactor := 10000.0
+		regValFloat := float64(signedValue) / scalingFactor
+		d.statusLog.WithFields(logrus.Fields{
+			"register_name": regInfo.Name, "raw_uint16_used": rawValue,
+			"ignored_bytes_hex": fmt.Sprintf("%x", data[2:4]), // Log các byte bị bỏ qua
+			"scaled_float":      regValFloat, "scaling_factor_assumed": scalingFactor,
+		}).Debug("Giải mã 4Q_FP_PF (Dùng 2 byte đầu / Length=2, Scaling Factor là giả định)")
+
+		var pfValue float64
+		epsilon := 0.00001
+		if regValFloat > 1.0 {
+			pfValue = 2.0 - regValFloat
+		} else if regValFloat < -1.0 {
+			pfValue = -2.0 - regValFloat
+		} else if math.Abs(regValFloat-1.0) < epsilon || math.Abs(regValFloat-(-1.0)) < epsilon {
+			pfValue = regValFloat
+		} else {
+			pfValue = regValFloat
+		}
+		return pfValue, nil
+
 	default:
 		d.statusLog.Warnf("Kiểu dữ liệu '%s' cho thanh ghi '%s' chưa được hỗ trợ giải mã.", regInfo.Type, regInfo.Name)
 		return fmt.Sprintf("UNSUPPORTED_TYPE(%s)", regInfo.Type), nil
@@ -350,22 +439,26 @@ func (d *Device) decodeBytes(data []byte, regInfo config.RegisterInfo) (interfac
 func (d *Device) handleModbusError(err error) {
 	timeoutMs := d.config.Connection.TimeoutMs
 	slaveID := d.config.Connection.SlaveID
-	logger := d.statusLog // Sử dụng status logger
-
+	logger := d.statusLog
+	if err == nil {
+		return
+	}
 	if mbErr, ok := err.(*modbus.ModbusError); ok {
-		logger.WithError(err).WithFields(logrus.Fields{
-			"slave_id": int(slaveID), "exception_code": mbErr.ExceptionCode, "exception_msg": getModbusExceptionMessage(mbErr.ExceptionCode),
-		}).Error("Lỗi Modbus từ Slave")
+		logger.WithError(err).WithFields(logrus.Fields{"slave_id": int(slaveID), "exception_code": mbErr.ExceptionCode, "exception_msg": getModbusExceptionMessage(mbErr.ExceptionCode)}).Error("Lỗi Modbus từ Slave")
 	} else if os.IsTimeout(err) {
-		logger.WithError(err).WithFields(logrus.Fields{
-			"slave_id": int(slaveID), "timeout_ms": timeoutMs,
-		}).Warn("Timeout khi chờ phản hồi từ Slave (os.IsTimeout)")
+		logger.WithError(err).WithFields(logrus.Fields{"slave_id": int(slaveID), "timeout_ms": timeoutMs}).Warn("Timeout khi chờ phản hồi từ Slave (os.IsTimeout)")
 	} else if netErr, ok := err.(net.Error); ok && netErr.Timeout() {
-		logger.WithError(err).WithFields(logrus.Fields{
-			"slave_id": int(slaveID), "timeout_ms": timeoutMs,
-		}).Warn("Timeout mạng khi chờ phản hồi từ Slave (net.Error)")
+		logger.WithError(err).WithFields(logrus.Fields{"slave_id": int(slaveID), "timeout_ms": timeoutMs}).Warn("Timeout mạng khi chờ phản hồi từ Slave (net.Error)")
 	} else {
-		logger.WithError(err).WithField("error_type", fmt.Sprintf("%T", err)).Warn("Lỗi giao tiếp khác")
+		if strings.Contains(err.Error(), "Access is denied") {
+			logger.WithError(err).WithField("error_type", fmt.Sprintf("%T", err)).Error("Lỗi truy cập cổng COM bị từ chối")
+		} else if strings.Contains(err.Error(), "The handle is invalid") {
+			logger.WithError(err).WithField("error_type", fmt.Sprintf("%T", err)).Error("Lỗi Handle không hợp lệ (Cổng COM?)")
+		} else if strings.Contains(err.Error(), "The parameter is incorrect") {
+			logger.WithError(err).WithField("error_type", fmt.Sprintf("%T", err)).Error("Lỗi Tham số không chính xác (Cấu hình cổng COM?)")
+		} else {
+			logger.WithError(err).WithField("error_type", fmt.Sprintf("%T", err)).Warn("Lỗi giao tiếp khác")
+		}
 	}
 }
 
@@ -392,3 +485,35 @@ func getModbusExceptionMessage(code byte) string {
 		return "Unknown Exception Code (" + strconv.Itoa(int(code)) + ")"
 	}
 }
+
+// --- Cần thêm import này nếu chưa có trong storage package ---
+// Hoặc import storage và dùng storage.SanitizeValue
+// package storage // Giả sử có file storage/utils.go chẳng hạn
+
+// SanitizeValue xử lý các giá trị đặc biệt (NaN, Inf) và lỗi chuỗi
+func SanitizeValue(value interface{}) interface{} {
+	if strVal, ok := value.(string); ok {
+		if strings.Contains(strVal, "ERROR") || strings.Contains(strVal, "INVALID") || strings.Contains(strVal, "N/A_") {
+			return nil
+		}
+	}
+	switch v := value.(type) {
+	case float32:
+		fv64 := float64(v)
+		if math.IsNaN(fv64) || math.IsInf(fv64, 0) {
+			return nil
+		}
+		return math.Round(fv64*10000) / 10000
+	case float64:
+		if math.IsNaN(v) || math.IsInf(v, 0) {
+			return nil
+		}
+		return math.Round(v*10000) / 10000
+	default:
+		return v
+	}
+}
+
+// // --- Cần thêm import này nếu chưa có ---
+//  import "math/rand" // Cần cho Jitter
+// // import "sort" // Cần nếu sắp xếp header CSV

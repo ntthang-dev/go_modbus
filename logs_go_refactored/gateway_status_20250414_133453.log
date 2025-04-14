@@ -1,0 +1,27 @@
+[36mINFO[0m[2025-04-14 13:34:53] --- Khởi chạy Gateway Modbus (Refactored + PortManager) --- 
+[36mINFO[0m[2025-04-14 13:34:53] Khởi tạo Port Manager cho cổng COM3...       
+[36mINFO[0m[2025-04-14 13:34:53] Port Manager bắt đầu hoạt động...             [36mport[0m=COM3
+[36mINFO[0m[2025-04-14 13:34:53] Khởi tạo handler cho \\.\COM3                 [36mport[0m=COM3
+[36mINFO[0m[2025-04-14 13:34:53] Đã đọc 85 thanh ghi cho thiết bị 'Schneider_PM_COM3_ID1' 
+[36mINFO[0m[2025-04-14 13:34:53] Bắt đầu vòng lặp đọc dữ liệu...               [36mdevice[0m=Schneider_PM_COM3_ID1 [36mtag_location[0m=Tu_Dien_Chinh [36mtag_panel[0m=Panel_1 [36mtag_slave_id_tag[0m=1
+[36mINFO[0m[2025-04-14 13:34:53] Đã đọc 85 thanh ghi cho thiết bị 'Schneider_PM_COM3_ID2' 
+[36mINFO[0m[2025-04-14 13:34:53] Đã khởi chạy 2 goroutine cho các thiết bị. Nhấn Ctrl+C để dừng. 
+[36mINFO[0m[2025-04-14 13:34:53] Bắt đầu vòng lặp đọc dữ liệu...               [36mdevice[0m=Schneider_PM_COM3_ID2 [36mtag_location[0m=Tu_Dien_Chinh [36mtag_panel[0m=Panel_2 [36mtag_slave_id_tag[0m=2
+[33mWARN[0m[2025-04-14 13:35:01] Đã nhận tín hiệu dừng. Đang yêu cầu các goroutine kết thúc... 
+[36mINFO[0m[2025-04-14 13:35:01] Đang chờ các goroutine Device hoàn thành...  
+[33mWARN[0m[2025-04-14 13:35:01] Bị hủy khi đang chờ phản hồi cho thanh ghi DPF_C  [33mdevice[0m=Schneider_PM_COM3_ID2 [33mtag_location[0m=Tu_Dien_Chinh [33mtag_panel[0m=Panel_2 [33mtag_slave_id_tag[0m=2
+[36mINFO[0m[2025-04-14 13:35:01] Context bị hủy trong quá trình đọc thanh ghi.  [36mdevice[0m=Schneider_PM_COM3_ID2 [36mtag_location[0m=Tu_Dien_Chinh [36mtag_panel[0m=Panel_2 [36mtag_slave_id_tag[0m=2
+[33mWARN[0m[2025-04-14 13:35:01] Bị hủy khi đang chờ phản hồi cho thanh ghi PF_Total_IEEE_F32  [33mdevice[0m=Schneider_PM_COM3_ID1 [33mtag_location[0m=Tu_Dien_Chinh [33mtag_panel[0m=Panel_1 [33mtag_slave_id_tag[0m=1
+[36mINFO[0m[2025-04-14 13:35:01] Context bị hủy trong quá trình đọc thanh ghi.  [36mdevice[0m=Schneider_PM_COM3_ID1 [36mtag_location[0m=Tu_Dien_Chinh [36mtag_panel[0m=Panel_1 [36mtag_slave_id_tag[0m=1
+[33mWARN[0m[2025-04-14 13:35:01] Chu kỳ đọc bị hủy, không ghi dữ liệu.         [33mdevice[0m=Schneider_PM_COM3_ID1 [33mtag_location[0m=Tu_Dien_Chinh [33mtag_panel[0m=Panel_1 [33mtag_slave_id_tag[0m=1
+[33mWARN[0m[2025-04-14 13:35:01] Chu kỳ đọc bị hủy, không ghi dữ liệu.         [33mdevice[0m=Schneider_PM_COM3_ID2 [33mtag_location[0m=Tu_Dien_Chinh [33mtag_panel[0m=Panel_2 [33mtag_slave_id_tag[0m=2
+[36mINFO[0m[2025-04-14 13:35:01] Context bị hủy trong quá trình đọc thanh ghi.  [36mdevice[0m=Schneider_PM_COM3_ID2 [36mtag_location[0m=Tu_Dien_Chinh [36mtag_panel[0m=Panel_2 [36mtag_slave_id_tag[0m=2
+[33mWARN[0m[2025-04-14 13:35:01] Chu kỳ đọc bị hủy, không ghi dữ liệu.         [33mdevice[0m=Schneider_PM_COM3_ID2 [33mtag_location[0m=Tu_Dien_Chinh [33mtag_panel[0m=Panel_2 [33mtag_slave_id_tag[0m=2
+[36mINFO[0m[2025-04-14 13:35:01] Nhận tín hiệu dừng, kết thúc vòng lặp đọc.    [36mdevice[0m=Schneider_PM_COM3_ID2 [36mtag_location[0m=Tu_Dien_Chinh [36mtag_panel[0m=Panel_2 [36mtag_slave_id_tag[0m=2
+[36mINFO[0m[2025-04-14 13:35:01] Context bị hủy trong quá trình đọc thanh ghi.  [36mdevice[0m=Schneider_PM_COM3_ID1 [36mtag_location[0m=Tu_Dien_Chinh [36mtag_panel[0m=Panel_1 [36mtag_slave_id_tag[0m=1
+[33mWARN[0m[2025-04-14 13:35:01] Chu kỳ đọc bị hủy, không ghi dữ liệu.         [33mdevice[0m=Schneider_PM_COM3_ID1 [33mtag_location[0m=Tu_Dien_Chinh [33mtag_panel[0m=Panel_1 [33mtag_slave_id_tag[0m=1
+[36mINFO[0m[2025-04-14 13:35:01] Nhận tín hiệu dừng, kết thúc vòng lặp đọc.    [36mdevice[0m=Schneider_PM_COM3_ID1 [36mtag_location[0m=Tu_Dien_Chinh [36mtag_panel[0m=Panel_1 [36mtag_slave_id_tag[0m=1
+[36mINFO[0m[2025-04-14 13:35:01] Các goroutine Device đã dừng.                
+[36mINFO[0m[2025-04-14 13:35:01] Chương trình kết thúc.                       
+[36mINFO[0m[2025-04-14 13:35:01] Đang đóng các file CSV...                    
+[36mINFO[0m[2025-04-14 13:35:01] Đã đóng các file CSV.                        

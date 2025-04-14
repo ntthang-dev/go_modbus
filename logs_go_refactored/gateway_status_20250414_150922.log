@@ -1,0 +1,35 @@
+[36mINFO[0m[2025-04-14 15:09:22] --- Khởi chạy Gateway Modbus (Refactored + PortManager) --- 
+[36mINFO[0m[2025-04-14 15:09:22] Khởi tạo Port Manager cho cổng COM3...       
+[36mINFO[0m[2025-04-14 15:09:22] Port Manager bắt đầu hoạt động...             [36mport[0m=COM3
+[36mINFO[0m[2025-04-14 15:09:22] Khởi tạo handler cho \\.\COM3                 [36mport[0m=COM3
+[36mINFO[0m[2025-04-14 15:09:22] Đã đọc 30 thanh ghi cho thiết bị 'Selec_MFM383A' 
+[36mINFO[0m[2025-04-14 15:09:22] Đã khởi chạy 1 goroutine cho các thiết bị. Nhấn Ctrl+C để dừng. 
+[36mINFO[0m[2025-04-14 15:09:22] Bắt đầu vòng lặp đọc dữ liệu...               [36mdevice[0m=Selec_MFM383A [36mtag_location[0m=LAB_MR.TAM [36mtag_panel[0m=BAN_4 [36mtag_slave_id_tag[0m=2
+[31mERRO[0m[2025-04-14 15:09:25] Port Manager: Giao dịch Modbus thất bại       [31maddr[0m=2999 [31merror[0m="serial: timeout" [31mfc[0m=3 [31mport[0m=COM3 [31mqty[0m=2 [31mslave_id[0m=2
+[33mWARN[0m[2025-04-14 15:09:25] Lỗi giao tiếp khác                            [33mdevice[0m=Selec_MFM383A [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString" [33mtag_location[0m=LAB_MR.TAM [33mtag_panel[0m=BAN_4 [33mtag_slave_id_tag[0m=2
+[31mERRO[0m[2025-04-14 15:09:26] Port Manager: Giao dịch Modbus thất bại       [31maddr[0m=3001 [31merror[0m="serial: timeout" [31mfc[0m=3 [31mport[0m=COM3 [31mqty[0m=2 [31mslave_id[0m=2
+[33mWARN[0m[2025-04-14 15:09:26] Lỗi giao tiếp khác                            [33mdevice[0m=Selec_MFM383A [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString" [33mtag_location[0m=LAB_MR.TAM [33mtag_panel[0m=BAN_4 [33mtag_slave_id_tag[0m=2
+[31mERRO[0m[2025-04-14 15:09:27] Port Manager: Giao dịch Modbus thất bại       [31maddr[0m=3003 [31merror[0m="serial: timeout" [31mfc[0m=3 [31mport[0m=COM3 [31mqty[0m=2 [31mslave_id[0m=2
+[33mWARN[0m[2025-04-14 15:09:27] Lỗi giao tiếp khác                            [33mdevice[0m=Selec_MFM383A [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString" [33mtag_location[0m=LAB_MR.TAM [33mtag_panel[0m=BAN_4 [33mtag_slave_id_tag[0m=2
+[31mERRO[0m[2025-04-14 15:09:28] Port Manager: Giao dịch Modbus thất bại       [31maddr[0m=3005 [31merror[0m="serial: timeout" [31mfc[0m=3 [31mport[0m=COM3 [31mqty[0m=2 [31mslave_id[0m=2
+[33mWARN[0m[2025-04-14 15:09:28] Lỗi giao tiếp khác                            [33mdevice[0m=Selec_MFM383A [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString" [33mtag_location[0m=LAB_MR.TAM [33mtag_panel[0m=BAN_4 [33mtag_slave_id_tag[0m=2
+[31mERRO[0m[2025-04-14 15:09:29] Port Manager: Giao dịch Modbus thất bại       [31maddr[0m=3007 [31merror[0m="serial: timeout" [31mfc[0m=3 [31mport[0m=COM3 [31mqty[0m=2 [31mslave_id[0m=2
+[33mWARN[0m[2025-04-14 15:09:29] Lỗi giao tiếp khác                            [33mdevice[0m=Selec_MFM383A [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString" [33mtag_location[0m=LAB_MR.TAM [33mtag_panel[0m=BAN_4 [33mtag_slave_id_tag[0m=2
+[31mERRO[0m[2025-04-14 15:09:30] Port Manager: Giao dịch Modbus thất bại       [31maddr[0m=3009 [31merror[0m="serial: timeout" [31mfc[0m=3 [31mport[0m=COM3 [31mqty[0m=2 [31mslave_id[0m=2
+[33mWARN[0m[2025-04-14 15:09:30] Lỗi giao tiếp khác                            [33mdevice[0m=Selec_MFM383A [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString" [33mtag_location[0m=LAB_MR.TAM [33mtag_panel[0m=BAN_4 [33mtag_slave_id_tag[0m=2
+[31mERRO[0m[2025-04-14 15:09:31] Port Manager: Giao dịch Modbus thất bại       [31maddr[0m=3011 [31merror[0m="serial: timeout" [31mfc[0m=3 [31mport[0m=COM3 [31mqty[0m=2 [31mslave_id[0m=2
+[33mWARN[0m[2025-04-14 15:09:31] Lỗi giao tiếp khác                            [33mdevice[0m=Selec_MFM383A [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString" [33mtag_location[0m=LAB_MR.TAM [33mtag_panel[0m=BAN_4 [33mtag_slave_id_tag[0m=2
+[31mERRO[0m[2025-04-14 15:09:32] Port Manager: Giao dịch Modbus thất bại       [31maddr[0m=3013 [31merror[0m="serial: timeout" [31mfc[0m=3 [31mport[0m=COM3 [31mqty[0m=2 [31mslave_id[0m=2
+[33mWARN[0m[2025-04-14 15:09:32] Lỗi giao tiếp khác                            [33mdevice[0m=Selec_MFM383A [33merror[0m="serial: timeout" [33merror_type[0m="*errors.errorString" [33mtag_location[0m=LAB_MR.TAM [33mtag_panel[0m=BAN_4 [33mtag_slave_id_tag[0m=2
+[33mWARN[0m[2025-04-14 15:09:32] Đã nhận tín hiệu dừng. Đang yêu cầu các goroutine kết thúc... 
+[36mINFO[0m[2025-04-14 15:09:32] Đang chờ các goroutine Device hoàn thành...  
+[33mWARN[0m[2025-04-14 15:09:32] Bị hủy khi đang chờ phản hồi cho thanh ghi Current_I1  [33mdevice[0m=Selec_MFM383A [33mtag_location[0m=LAB_MR.TAM [33mtag_panel[0m=BAN_4 [33mtag_slave_id_tag[0m=2
+[36mINFO[0m[2025-04-14 15:09:32] Context bị hủy trong quá trình đọc thanh ghi.  [36mdevice[0m=Selec_MFM383A [36mtag_location[0m=LAB_MR.TAM [36mtag_panel[0m=BAN_4 [36mtag_slave_id_tag[0m=2
+[33mWARN[0m[2025-04-14 15:09:32] Chu kỳ đọc bị hủy, không ghi dữ liệu.         [33mdevice[0m=Selec_MFM383A [33mtag_location[0m=LAB_MR.TAM [33mtag_panel[0m=BAN_4 [33mtag_slave_id_tag[0m=2
+[36mINFO[0m[2025-04-14 15:09:32] Context bị hủy trong quá trình đọc thanh ghi.  [36mdevice[0m=Selec_MFM383A [36mtag_location[0m=LAB_MR.TAM [36mtag_panel[0m=BAN_4 [36mtag_slave_id_tag[0m=2
+[33mWARN[0m[2025-04-14 15:09:32] Chu kỳ đọc bị hủy, không ghi dữ liệu.         [33mdevice[0m=Selec_MFM383A [33mtag_location[0m=LAB_MR.TAM [33mtag_panel[0m=BAN_4 [33mtag_slave_id_tag[0m=2
+[36mINFO[0m[2025-04-14 15:09:32] Nhận tín hiệu dừng, kết thúc vòng lặp đọc.    [36mdevice[0m=Selec_MFM383A [36mtag_location[0m=LAB_MR.TAM [36mtag_panel[0m=BAN_4 [36mtag_slave_id_tag[0m=2
+[36mINFO[0m[2025-04-14 15:09:32] Các goroutine Device đã dừng.                
+[36mINFO[0m[2025-04-14 15:09:32] Chương trình kết thúc.                       
+[36mINFO[0m[2025-04-14 15:09:32] Đang đóng các file CSV...                    
+[36mINFO[0m[2025-04-14 15:09:32] Đã đóng các file CSV.                        

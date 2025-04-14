@@ -3,23 +3,88 @@ package main
 import (
 	"context"
 	"flag"
+	"fmt"
+	"io" // Cần cho io.MultiWriter, io.Discard
 	"log"
 	"os"
 	"os/signal"
 	"path/filepath"
 	"sync"
 	"syscall"
+	"time"
 
-	// !!! THAY 'testmod' bằng tên module của bạn !!!
-	"testmod/config"
-	"testmod/modbusclient"
-	"testmod/storage"
+	// !!! THAY 'modbus_register_slave' bằng tên module của bạn !!!
+	"modbus_register_slave/config"
+	"modbus_register_slave/modbusclient"
+	"modbus_register_slave/portmanager"
+	"modbus_register_slave/storage"
+
+	"github.com/sirupsen/logrus"
 )
 
 var (
 	configFile = flag.String("config", "config.yaml", "Đường dẫn tới file cấu hình YAML")
-	logDir     = "logs_go_refactored" // Thư mục log mặc định (có thể đưa vào config)
+	logDir     = "logs_go_refactored" // Thư mục log mặc định
 )
+
+// *** THÊM: Hàm setup logger riêng cho trạng thái/lỗi (Di chuyển từ storage) ***
+func SetupStatusLogger(cfg *config.LoggingConfig, logDir string) (*logrus.Logger, *os.File) {
+	logger := logrus.New()
+	level, err := logrus.ParseLevel(cfg.Level)
+	if err != nil {
+		level = logrus.InfoLevel
+	}
+	logger.SetLevel(level)
+
+	ts := time.Now().Format("20060102_150405")
+	statusLogFilename := fmt.Sprintf(cfg.StatusErrorLogFile, ts)
+	statusLogPath := filepath.Join(logDir, statusLogFilename)
+
+	logFile, errLogrus := os.OpenFile(statusLogPath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	logOutputWriters := []io.Writer{os.Stdout} // Luôn log status ra console (ít nhất là INFO)
+	if errLogrus == nil {
+		logOutputWriters = append(logOutputWriters, logFile) // Thêm file nếu mở thành công
+		log.Printf("Status/Error log sẽ được ghi tại: %s (Level: %s)", statusLogPath, level.String())
+	} else {
+		log.Printf("Lỗi mở file log status/error '%s': %v. Log sẽ chỉ ghi ra Console.", statusLogPath, errLogrus)
+	}
+
+	// Tạo MultiWriter cho status logger
+	mw := io.MultiWriter(logOutputWriters...)
+	logger.SetOutput(mw)
+	// Dùng TextFormatter cho dễ đọc cả trên console và file
+	logger.SetFormatter(&logrus.TextFormatter{
+		FullTimestamp:   true,
+		TimestampFormat: "2006-01-02 15:04:05",
+		ForceColors:     true,               // Có màu trên console
+		DisableColors:   (errLogrus != nil), // Tắt màu nếu chỉ ghi ra file (khi console lỗi)
+	})
+
+	// Không cần thêm Hook nữa vì TextFormatter đã đủ cho cả console và file
+	return logger, logFile // Trả về logger và file handle (có thể là nil)
+}
+
+// *** THÊM: Hàm setup logger riêng cho dữ liệu (Di chuyển từ storage) ***
+func SetupDataLogger(cfg *config.LoggingConfig, logDir string) (*logrus.Logger, *os.File) {
+	logger := logrus.New()
+	logger.SetLevel(logrus.InfoLevel) // Data logger thường chỉ cần INFO
+
+	ts := time.Now().Format("20060102_150405")
+	dataLogFilename := fmt.Sprintf("modbus_data_logrus_%s.log", ts)
+	jsonLogPath := filepath.Join(logDir, dataLogFilename)
+
+	logFile, errLogrus := os.OpenFile(jsonLogPath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	if errLogrus == nil {
+		logger.SetOutput(logFile) // Chỉ ghi ra file JSON
+		logger.SetFormatter(&logrus.JSONFormatter{TimestampFormat: time.RFC3339Nano})
+		log.Printf("Data log (JSON) sẽ được ghi tại: %s", jsonLogPath)
+		return logger, logFile
+	} else {
+		log.Printf("Lỗi mở file data log JSON '%s': %v. Data logger sẽ không ghi file.", jsonLogPath, errLogrus)
+		logger.SetOutput(io.Discard)
+		return logger, nil
+	}
+}
 
 func main() {
 	flag.Parse()
@@ -30,42 +95,29 @@ func main() {
 		log.Fatalf("FATAL: Lỗi tải cấu hình từ '%s': %v", *configFile, err)
 	}
 
-	// --- 2. Thiết lập Logging ---
-	// Tạo thư mục log chung nếu chưa có
+	// --- 2. Thiết lập Logging (Sử dụng hàm vừa chuyển vào) ---
 	if err := os.MkdirAll(logDir, 0755); err != nil {
 		log.Fatalf("FATAL: Lỗi tạo thư mục log '%s': %v", logDir, err)
 	}
-
-	// Tạo Status/Error Logger (ghi ra console và file riêng)
-	statusLogger, statusLogFile := storage.SetupStatusLogger(&cfg.Logging, logDir)
+	statusLogger, statusLogFile := SetupStatusLogger(&cfg.Logging, logDir)
 	if statusLogFile != nil {
 		defer statusLogFile.Close()
 	}
-	statusLogger.Info("--- Khởi chạy Gateway Modbus ---")
-
-	// Tạo Data Logger (chỉ ghi JSON ra file)
-	dataLogger, dataLogFile := storage.SetupDataLogger(&cfg.Logging, logDir)
+	dataLogger, dataLogFile := SetupDataLogger(&cfg.Logging, logDir)
 	if dataLogFile != nil {
 		defer dataLogFile.Close()
 	}
+	statusLogger.Info("--- Khởi chạy Gateway Modbus (Refactored + PortManager) ---")
 
 	// --- 3. Khởi tạo Storage Backends cho Dữ liệu ---
-	var dataWriters []storage.DataWriter
-
-	// Logrus Writer cho dữ liệu (dùng dataLogger)
-	logrusDataWriter, errL := storage.NewLogrusWriter(dataLogger)
+	var globalDataWriters []storage.DataWriter
+	logrusDataWriter, errL := storage.NewLogrusWriter(dataLogger) // Truyền dataLogger
 	if errL != nil {
 		statusLogger.WithError(errL).Error("Lỗi khởi tạo Logrus Data Writer")
 	} else {
-		dataWriters = append(dataWriters, logrusDataWriter)
+		globalDataWriters = append(globalDataWriters, logrusDataWriter)
 	}
-
-	// InfluxDB Writer (Bỏ qua vì đã loại bỏ khỏi config)
-	// influxWriter, errI := storage.NewInfluxWriter(&cfg.Storage.InfluxDB) ...
-
-	// Tạo MultiWriter để ghi dữ liệu vào các backend được kích hoạt
-	multiDataWriter := storage.NewMultiWriter(dataWriters...)
-	// Defer Close cho MultiWriter sẽ gọi Close của từng writer bên trong
+	multiDataWriter := storage.NewMultiWriter(globalDataWriters...)
 	defer func() {
 		statusLogger.Info("Đang đóng các storage data writers...")
 		if err := multiDataWriter.Close(); err != nil {
@@ -75,92 +127,119 @@ func main() {
 		}
 	}()
 
-	// --- 4. Khởi tạo và Chạy Goroutine cho từng Thiết bị ---
-	var wg sync.WaitGroup
+	// --- 4. Khởi tạo Port Managers ---
+	portManagers := make(map[string]*portmanager.Manager)
 	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel() // Đảm bảo context được cancel khi main thoát
+	defer cancel()
+	var wgPortManagers sync.WaitGroup
+	devicesByPort := make(map[string][]config.DeviceConfig)
+	for _, devCfg := range cfg.Devices {
+		if devCfg.Enabled {
+			devicesByPort[devCfg.Connection.Port] = append(devicesByPort[devCfg.Connection.Port], devCfg)
+		}
+	}
 
+	for portName, devicesOnPort := range devicesByPort {
+		if len(devicesOnPort) == 0 {
+			continue
+		}
+		portCfg := devicesOnPort[0].Connection
+		statusLogger.Infof("Khởi tạo Port Manager cho cổng %s...", portName)
+		manager := portmanager.NewManager(portCfg, statusLogger) // Truyền statusLogger
+		portManagers[portName] = manager
+		wgPortManagers.Add(1)
+		go func(m *portmanager.Manager) { defer wgPortManagers.Done(); m.Run(ctx) }(manager)
+	}
+
+	// --- 5. Khởi tạo và Chạy Goroutine cho từng Thiết bị Logic ---
+	var wgDevices sync.WaitGroup
 	activeDevices := 0
-	var allCsvWriters []*storage.CsvWriter // Slice để quản lý các CSV writer cần đóng
+	allCsvWriters := []*storage.CsvWriter{}
 
-	for _, deviceCfg := range cfg.Devices {
+	for i := range cfg.Devices {
+		deviceCfg := &cfg.Devices[i]
 		if !deviceCfg.Enabled {
-			statusLogger.Warnf("Thiết bị '%s' đang bị vô hiệu hóa trong cấu hình.", deviceCfg.Name)
 			continue
 		}
 
-		// Đọc danh sách thanh ghi từ file CSV
-		if deviceCfg.RegisterListFile == "" {
-			statusLogger.Errorf("Thiết bị '%s' thiếu cấu hình 'register_list_file'. Bỏ qua.", deviceCfg.Name)
+		portMgr, ok := portManagers[deviceCfg.Connection.Port]
+		if !ok {
+			statusLogger.Errorf("Lỗi logic: Không tìm thấy Port Manager cho cổng %s của '%s'. Bỏ qua.", deviceCfg.Connection.Port, deviceCfg.Name)
 			continue
 		}
-		// Đường dẫn file CSV được coi là tương đối so với file config YAML
+		if deviceCfg.RegisterListFile == "" {
+			statusLogger.Errorf("Thiết bị '%s' thiếu 'register_list_file'. Bỏ qua.", deviceCfg.Name)
+			continue
+		}
+
 		csvPath := filepath.Join(filepath.Dir(*configFile), deviceCfg.RegisterListFile)
 		registers, err := config.LoadRegistersFromCSV(csvPath)
 		if err != nil {
-			statusLogger.WithError(err).Errorf("Không thể đọc danh sách thanh ghi cho thiết bị '%s' từ file '%s'. Bỏ qua thiết bị này.", deviceCfg.Name, csvPath)
+			statusLogger.WithError(err).Errorf("Lỗi đọc thanh ghi cho '%s' từ '%s'. Bỏ qua.", deviceCfg.Name, csvPath)
 			continue
 		}
 		if len(registers) == 0 {
-			statusLogger.Warnf("Danh sách thanh ghi cho thiết bị '%s' rỗng. Bỏ qua.", deviceCfg.Name)
+			statusLogger.Warnf("Danh sách thanh ghi rỗng cho '%s'. Bỏ qua.", deviceCfg.Name)
 			continue
 		}
 		statusLogger.Infof("Đã đọc %d thanh ghi cho thiết bị '%s'", len(registers), deviceCfg.Name)
 
-		// Tạo các writer riêng cho thiết bị này (bao gồm cả CSV nếu bật)
+		// Tạo các writer riêng cho thiết bị này
 		deviceSpecificWriters := []storage.DataWriter{}
-		deviceSpecificWriters = append(deviceSpecificWriters, dataWriters...) // Bắt đầu với các writer chung (hiện chỉ có Logrus JSON)
+		deviceSpecificWriters = append(deviceSpecificWriters, globalDataWriters...)
 
-		var devCsvWriter *storage.CsvWriter // Biến tạm cho CSV writer của device này
+		var devCsvWriter *storage.CsvWriter
 		if cfg.Logging.EnableCSV {
 			devCsvWriter, err = storage.NewCsvWriter(true, logDir, deviceCfg.Name, registers)
 			if err != nil {
-				statusLogger.WithError(err).Errorf("Lỗi khởi tạo CSV Writer cho thiết bị '%s'", deviceCfg.Name)
+				statusLogger.WithError(err).Errorf("Lỗi khởi tạo CSV Writer cho '%s'", deviceCfg.Name)
 			} else if devCsvWriter != nil {
 				deviceSpecificWriters = append(deviceSpecificWriters, devCsvWriter)
-				allCsvWriters = append(allCsvWriters, devCsvWriter) // Thêm vào danh sách để đóng sau
+				allCsvWriters = append(allCsvWriters, devCsvWriter)
 			}
 		}
-		// Tạo multi writer riêng cho thiết bị này
 		deviceMultiWriter := storage.NewMultiWriter(deviceSpecificWriters...)
 
-		// Tạo đối tượng Device, truyền vào statusLogger và deviceMultiWriter
-		device := modbusclient.NewDevice(deviceCfg, registers, deviceMultiWriter, statusLogger)
+		// Tạo đối tượng Device, truyền statusLogger và request channel
+		device := modbusclient.NewDevice(*deviceCfg, registers, deviceMultiWriter, statusLogger, portMgr.GetRequestChannel())
 
-		wg.Add(1)
-		go device.RunPollingLoop(ctx, &wg) // Chạy trong goroutine
+		wgDevices.Add(1)
+		go device.RunPollingLoop(ctx, &wgDevices)
 		activeDevices++
 	}
 
-	// Defer việc đóng tất cả các file CSV đã tạo
 	defer func() {
 		statusLogger.Info("Đang đóng các file CSV...")
 		for _, cw := range allCsvWriters {
 			if cw != nil {
-				cw.Close() // Gọi hàm Close của CsvWriter
+				cw.Close()
 			}
 		}
 		statusLogger.Info("Đã đóng các file CSV.")
 	}()
 
 	if activeDevices == 0 {
-		statusLogger.Warn("Không có thiết bị nào được kích hoạt trong file cấu hình. Thoát chương trình.")
+		statusLogger.Warn("Không có thiết bị nào được kích hoạt. Thoát chương trình.")
 		cancel()
-		return
+	} else {
+		statusLogger.Infof("Đã khởi chạy %d goroutine cho các thiết bị. Nhấn Ctrl+C để dừng.", activeDevices)
 	}
 
-	statusLogger.Infof("Đã khởi chạy %d goroutine cho các thiết bị. Nhấn Ctrl+C để dừng.", activeDevices)
-
-	// --- 5. Chờ Tín hiệu Dừng ---
+	// --- 6. Chờ Tín hiệu Dừng ---
 	sigChan := make(chan os.Signal, 1)
 	signal.Notify(sigChan, syscall.SIGINT, syscall.SIGTERM)
-	<-sigChan // Chờ Ctrl+C
+	<-sigChan
 
 	statusLogger.Warn("Đã nhận tín hiệu dừng. Đang yêu cầu các goroutine kết thúc...")
-	cancel() // Gửi tín hiệu hủy
+	cancel()
 
-	statusLogger.Info("Đang chờ các goroutine hoàn thành...")
-	wg.Wait() // Chờ tất cả dừng
+	statusLogger.Info("Đang chờ các goroutine Device hoàn thành...")
+	wgDevices.Wait()
+	statusLogger.Info("Các goroutine Device đã dừng.")
 
-	statusLogger.Info("Tất cả goroutine đã dừng. Chương trình kết thúc.")
+	statusLogger.Info("Đang chờ các goroutine Port Manager hoàn thành...")
+	wgPortManagers.Wait()
+	statusLogger.Info("Các goroutine Port Manager đã dừng.")
+
+	statusLogger.Info("Chương trình kết thúc.")
 }

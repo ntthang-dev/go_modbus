@@ -1,0 +1,17 @@
+[36mINFO[0m[2025-04-14 14:56:48] --- Khởi chạy Gateway Modbus (Refactored + PortManager) --- 
+[36mINFO[0m[2025-04-14 14:56:48] Khởi tạo Port Manager cho cổng COM3...       
+[36mINFO[0m[2025-04-14 14:56:48] Port Manager bắt đầu hoạt động...             [36mport[0m=COM3
+[36mINFO[0m[2025-04-14 14:56:48] Khởi tạo handler cho \\.\COM3                 [36mport[0m=COM3
+[36mINFO[0m[2025-04-14 14:56:48] Đã đọc 30 thanh ghi cho thiết bị 'Selec_MFM383A' 
+[36mINFO[0m[2025-04-14 14:56:48] Đã khởi chạy 1 goroutine cho các thiết bị. Nhấn Ctrl+C để dừng. 
+[36mINFO[0m[2025-04-14 14:56:48] Bắt đầu vòng lặp đọc dữ liệu...               [36mdevice[0m=Selec_MFM383A [36mtag_location[0m="LAB MR.TAM" [36mtag_panel[0m="BAN 4" [36mtag_slave_id_tag[0m=2
+[33mWARN[0m[2025-04-14 14:56:49] Đã nhận tín hiệu dừng. Đang yêu cầu các goroutine kết thúc... 
+[36mINFO[0m[2025-04-14 14:56:49] Đang chờ các goroutine Device hoàn thành...  
+[33mWARN[0m[2025-04-14 14:56:49] Bị hủy khi đang chờ phản hồi cho thanh ghi Voltage_V1N  [33mdevice[0m=Selec_MFM383A [33mtag_location[0m="LAB MR.TAM" [33mtag_panel[0m="BAN 4" [33mtag_slave_id_tag[0m=2
+[36mINFO[0m[2025-04-14 14:56:49] Context bị hủy trong quá trình đọc thanh ghi.  [36mdevice[0m=Selec_MFM383A [36mtag_location[0m="LAB MR.TAM" [36mtag_panel[0m="BAN 4" [36mtag_slave_id_tag[0m=2
+[33mWARN[0m[2025-04-14 14:56:49] Chu kỳ đọc bị hủy, không ghi dữ liệu.         [33mdevice[0m=Selec_MFM383A [33mtag_location[0m="LAB MR.TAM" [33mtag_panel[0m="BAN 4" [33mtag_slave_id_tag[0m=2
+[36mINFO[0m[2025-04-14 14:56:49] Nhận tín hiệu dừng, kết thúc vòng lặp đọc.    [36mdevice[0m=Selec_MFM383A [36mtag_location[0m="LAB MR.TAM" [36mtag_panel[0m="BAN 4" [36mtag_slave_id_tag[0m=2
+[36mINFO[0m[2025-04-14 14:56:49] Các goroutine Device đã dừng.                
+[36mINFO[0m[2025-04-14 14:56:49] Chương trình kết thúc.                       
+[36mINFO[0m[2025-04-14 14:56:49] Đang đóng các file CSV...                    
+[36mINFO[0m[2025-04-14 14:56:49] Đã đóng các file CSV.                        
