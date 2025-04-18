@@ -1,5 +1,5 @@
 Name,Address,Type,Length
-Voltage_V1N,3000,FLOAT32,2
+Voltage_V1N,3000,FLOAT,2
 Voltage_V2N,3002,FLOAT32,2
 Voltage_V3N,3004,FLOAT32,2
 Avg_Voltage_LN,3006,FLOAT32,2

@@ -2,12 +2,11 @@
 package storage
 
 import (
+	// Sử dụng slog nếu cần log trong package này
 	"math"
 	"strings"
 	"time"
-
 	// !!! THAY 'modbus_register_slave' bằng tên module của bạn !!!
-	"modbus_register_slave/config"
 )
 
 // DataWriter là interface chung cho các backend lưu trữ dữ liệu Modbus.
@@ -25,11 +24,8 @@ func (n *NoOpWriter) WriteData(deviceName string, deviceTags map[string]string, 
 func (n *NoOpWriter) Close() error { return nil }
 
 // MultiWriter cho phép ghi vào nhiều DataWriter.
-type MultiWriter struct {
-	writers []DataWriter
-}
+type MultiWriter struct{ writers []DataWriter }
 
-// NewMultiWriter tạo một MultiWriter mới, lọc bỏ các writer nil.
 func NewMultiWriter(writers ...DataWriter) *MultiWriter {
 	mw := &MultiWriter{}
 	for _, w := range writers {
@@ -39,8 +35,6 @@ func NewMultiWriter(writers ...DataWriter) *MultiWriter {
 	}
 	return mw
 }
-
-// WriteData ghi dữ liệu vào tất cả các writer. Trả về lỗi đầu tiên gặp phải.
 func (mw *MultiWriter) WriteData(deviceName string, deviceTags map[string]string, data map[string]interface{}, timestamp time.Time) error {
 	var firstErr error
 	for _, w := range mw.writers {
@@ -50,8 +44,6 @@ func (mw *MultiWriter) WriteData(deviceName string, deviceTags map[string]string
 	}
 	return firstErr
 }
-
-// Close đóng tất cả các writer. Trả về lỗi đầu tiên gặp phải.
 func (mw *MultiWriter) Close() error {
 	var firstErr error
 	for _, w := range mw.writers {
@@ -62,7 +54,6 @@ func (mw *MultiWriter) Close() error {
 	return firstErr
 }
 
-// *** GIỮ LẠI HÀM NÀY Ở ĐÂY VÀ ĐẢM BẢO NÓ ĐƯỢC EXPORT (Viết hoa chữ S) ***
 // SanitizeValue xử lý các giá trị đặc biệt (NaN, Inf) và lỗi dạng chuỗi.
 func SanitizeValue(value interface{}) interface{} {
 	if strVal, ok := value.(string); ok {
@@ -87,11 +78,4 @@ func SanitizeValue(value interface{}) interface{} {
 	}
 }
 
-// GetRegisterMap (Có thể không cần thiết nếu dùng slice RegisterInfo trực tiếp)
-func GetRegisterMap(registers []config.RegisterInfo) map[string]config.RegisterInfo {
-	regMap := make(map[string]config.RegisterInfo, len(registers))
-	for _, r := range registers {
-		regMap[r.Name] = r
-	}
-	return regMap
-}
+// --- Xóa bỏ code thừa ---

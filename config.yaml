@@ -1,80 +1,35 @@
 # --- config.yaml ---
 # File cấu hình cho ứng dụng Modbus Go Gateway
 
-# Cấu hình Logging chung
 logging:
   level: "info"  # debug, info, warn, error
   enable_csv: true # Bật/tắt ghi file CSV dữ liệu song song
-  status_error_log_file: "gateway_status_%s.log" # Mẫu tên file log trạng thái/lỗi
+  # Mẫu tên file log cho trạng thái và lỗi
+  status_error_log_file: "gateway_status_%s.log" # %s = timestamp
+  # Mẫu tên file log cho dữ liệu đọc được (JSON)
+  data_log_file: "modbus_data_logrus_%s.log" # %s = timestamp (Tên file có thể đổi sau)
 
-# Cấu hình lưu trữ (Hiện tại chỉ có tùy chọn CSV)
 storage:
-  # influxdb: # Tạm thời tắt
-  #   enable: false
-  #   url: "http://localhost:8086"
-  #   token: "YOUR_INFLUXDB_TOKEN"
-  #   org: "your-org"
-  #   bucket: "your-bucket"
-  {} # Để trống nếu không có cấu hình storage khác
+  {} # Hiện không có cấu hình storage đặc biệt
 
-# Danh sách các thiết bị Modbus cần đọc
 devices:
-  # --- Thiết bị 1 ---
-  - name: "Schneider_PM_COM3_ID1" # Đổi tên để phân biệt rõ hơn
+  - name: "Schneider_PM_COM3_ID1"
     enabled: true
-    tags:
-      location: "Tu_Tu_Bu_Ung_Dong"
-      panel: "Panel_1"
-      slave_id_tag: "1" # Thêm tag Slave ID
-    register_list_file: "register_pm2120.csv" # File CSV chứa danh sách thanh ghi
-    connection:
-      type: "rtu"
-      port: "COM3"           # <<< Cổng COM vật lý
-      baudrate: 19200
-      databits: 8
-      parity: "N"
-      stopbits: 1
-      slaveid: 1             # <<< Slave ID của thiết bị này
-      timeout_ms: 1000
-      address_base: 1
-    polling_interval_ms: 1500 # Tăng nhẹ polling interval
+    tags: { location: "Tu_Dien_Chinh", panel: "Panel_1", slave_id_tag: "1" }
+    register_list_file: "registers_pm2120.csv"
+    connection: { type: "rtu", port: "COM3", baudrate: 19200, databits: 8, parity: "N", stopbits: 1, slaveid: 1, timeout_ms: 1000, address_base: 1 }
+    polling_interval_ms: 1500
 
-  # --- Thiết bị 2 (Cùng cổng COM3, khác Slave ID) ---
   - name: "Schneider_PM_COM3_ID2"
-    enabled: false            # !!! Bật thiết bị này lên để test multi-slave !!!
-    tags:
-      location: "Tu_Tu_Bu_Ung_Dong"
-      panel: "Panel_2"
-      slave_id_tag: "2" # Thêm tag Slave ID
-    register_list_file: "register_pm2120.csv" # Dùng chung file thanh ghi vì thiết bị giống hệt
-    connection:
-      type: "rtu"
-      port: "COM3"           # <<< Dùng chung cổng COM3
-      baudrate: 19200        # Các thông số serial phải giống hệt nhau
-      databits: 8
-      parity: "N"
-      stopbits: 1
-      slaveid: 2             # <<< Slave ID của thiết bị này là 2
-      timeout_ms: 1500
-      address_base: 1
-    polling_interval_ms: 5000 # Đặt khác đi một chút để tránh đọc đồng thời tuyệt đối
-
-# --- Thiết bị 3 (Cùng cổng COM3, khác Slave ID) ---
-  - name: "Selec_MFM383A"
-    enabled: false            # !!! Bật thiết bị này lên để test multi-slave !!!
-    tags:
-      location: "LAB_MR.TAM"
-      panel: "BAN_4"
-      slave_id_tag: "5" # Thêm tag Slave ID
-    register_list_file: "register_mfm383a.csv" # Dùng chung file thanh ghi vì thiết bị giống hệt
-    connection:
-      type: "rtu"
-      port: "COM3"           # <<< Dùng chung cổng COM3
-      baudrate: 19200        # Các thông số serial phải giống hệt nhau
-      databits: 8
-      parity: "N"
-      stopbits: 1
-      slaveid: 5             # <<< Slave ID của thiết bị này là 2
-      timeout_ms: 1000
-      address_base: 1
-    polling_interval_ms: 1700 # Đặt khác đi một chút để tránh đọc đồng thời tuyệt đối
+    enabled: true
+    tags: { location: "Tu_Dien_Chinh", panel: "Panel_2", slave_id_tag: "2" }
+    register_list_file: "registers_pm2120.csv"
+    connection: { type: "rtu", port: "COM3", baudrate: 19200, databits: 8, parity: "N", stopbits: 1, slaveid: 2, timeout_ms: 1000, address_base: 1 }
+    polling_interval_ms: 1700
+      
+  - name: "MFM383A_COM3"
+    enabled: false
+    tags: { location: "LAB_MR.TAM", panel: "Panel_1", slave_id_tag: "3" }
+    register_list_file: "registers_mfm383a.csv"
+    connection: { type: "rtu", port: "COM3", baudrate: 9600, databits: 8, parity: "N", stopbits: 1, slaveid: 5, timeout_ms: 1000, address_base: 0 }
+    polling_interval_ms: 1500
