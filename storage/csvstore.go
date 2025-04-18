@@ -4,17 +4,16 @@ package storage
 import (
 	"encoding/csv"
 	"fmt"
-	"log"
+	stlog "log" // Log chuẩn cho thông báo khởi tạo/đóng file
+	"log/slog"  // Sử dụng slog cho log lỗi ghi CSV
 	"os"
-	"path/filepath" // Cần để sắp xếp header nếu muốn
+	"path/filepath"
 	"strings"
 	"sync"
 	"time"
 
 	// !!! THAY 'modbus_register_slave' bằng tên module của bạn !!!
 	"modbus_register_slave/config"
-
-	"github.com/sirupsen/logrus"
 )
 
 // CsvWriter triển khai DataWriter để ghi dữ liệu vào file CSV.
@@ -22,7 +21,7 @@ type CsvWriter struct {
 	filePath string
 	file     *os.File
 	writer   *csv.Writer
-	headers  []string // Lưu thứ tự header (bao gồm Timestamp)
+	headers  []string
 	mu       sync.Mutex
 }
 
@@ -36,7 +35,6 @@ func NewCsvWriter(enable bool, logDir string, deviceName string, registers []con
 	}
 
 	ts := time.Now().Format("20060102_150405")
-	// Tạo tên file CSV riêng cho từng thiết bị
 	csvFilename := fmt.Sprintf("device_%s_data_%s.csv", strings.ReplaceAll(deviceName, " ", "_"), ts)
 	filePath := filepath.Join(logDir, csvFilename)
 
@@ -46,7 +44,6 @@ func NewCsvWriter(enable bool, logDir string, deviceName string, registers []con
 	}
 
 	writer := csv.NewWriter(file)
-	// Tạo header dựa trên thứ tự trong []RegisterInfo
 	headers := []string{"Timestamp"}
 	for _, reg := range registers {
 		headers = append(headers, reg.Name)
@@ -57,7 +54,7 @@ func NewCsvWriter(enable bool, logDir string, deviceName string, registers []con
 		return nil, fmt.Errorf("lỗi ghi CSV header cho '%s': %w", filePath, err)
 	}
 	writer.Flush()
-	log.Printf("Log CSV cho thiết bị '%s' sẽ được ghi tại: %s", deviceName, filePath)
+	stlog.Printf("Log CSV cho thiết bị '%s' sẽ được ghi tại: %s", deviceName, filePath) // Dùng log chuẩn
 
 	return &CsvWriter{filePath: filePath, file: file, writer: writer, headers: headers}, nil
 }
@@ -85,7 +82,8 @@ func (cw *CsvWriter) WriteData(deviceName string, deviceTags map[string]string, 
 	}
 
 	if err := cw.writer.Write(row); err != nil {
-		logrus.WithError(err).WithField("csv_file", cw.filePath).Error("Lỗi ghi dòng CSV")
+		// Sử dụng slog mặc định (đã được set ở main) để ghi lỗi
+		slog.Error("Lỗi ghi dòng CSV", slog.String("csv_file", cw.filePath), slog.Any("error", err))
 		return err
 	}
 	cw.writer.Flush()
@@ -97,19 +95,16 @@ func (cw *CsvWriter) Close() error {
 	cw.mu.Lock()
 	defer cw.mu.Unlock()
 	if cw.file != nil {
-		log.Printf("Đang đóng file log CSV: %s...", cw.filePath)
+		stlog.Printf("Đang đóng file log CSV: %s...", cw.filePath) // Dùng log chuẩn
 		cw.writer.Flush()
 		err := cw.file.Close()
 		cw.file = nil
 		cw.writer = nil
 		if err != nil {
-			log.Printf("Lỗi khi đóng file CSV '%s': %v", cw.filePath, err)
+			stlog.Printf("Lỗi khi đóng file CSV '%s': %v", cw.filePath, err)
 			return err
 		}
-		log.Printf("Đã đóng file log CSV: %s.", cw.filePath)
+		stlog.Printf("Đã đóng file log CSV: %s.", cw.filePath)
 	}
 	return nil
 }
-
-// --- Cần import sort nếu muốn sắp xếp header theo tên ---
-//  _ = sort.Strings // Dummy use

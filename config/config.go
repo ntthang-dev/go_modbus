@@ -4,6 +4,7 @@ package config
 import (
 	"encoding/csv"
 	"fmt"
+	stlog "log" // Dùng log chuẩn cho cảnh báo khi đọc config
 	"os"
 	"strconv"
 	"strings"
@@ -37,22 +38,21 @@ type ConnectionConfig struct {
 type DeviceConfig struct {
 	Name              string            `yaml:"name"`
 	Enabled           bool              `yaml:"enabled"`
-	Tags              map[string]string `yaml:"tags"` // Thêm tags tùy chỉnh
+	Tags              map[string]string `yaml:"tags"`
 	Connection        ConnectionConfig  `yaml:"connection"`
 	PollingIntervalMs int               `yaml:"polling_interval_ms"`
-	RegisterListFile  string            `yaml:"register_list_file"` // Đường dẫn file CSV
+	RegisterListFile  string            `yaml:"register_list_file"`
 }
 
-// StorageConfig (Hiện tại trống, có thể thêm cấu hình SQL...)
-type StorageConfig struct {
-	// InfluxDB InfluxDBConfig `yaml:"influxdb"` // Bỏ qua InfluxDB
-}
+// StorageConfig (Hiện tại trống)
+type StorageConfig struct{}
 
 // LoggingConfig cấu hình logging chung
 type LoggingConfig struct {
 	Level              string `yaml:"level"`
 	EnableCSV          bool   `yaml:"enable_csv"`
-	StatusErrorLogFile string `yaml:"status_error_log_file"` // Chỉ mẫu tên file
+	StatusErrorLogFile string `yaml:"status_error_log_file"`
+	DataLogFile        string `yaml:"data_log_file"`
 }
 
 // Config là cấu trúc tổng
@@ -80,6 +80,9 @@ func LoadConfig(filePath string) (*Config, error) {
 	if cfg.Logging.StatusErrorLogFile == "" {
 		cfg.Logging.StatusErrorLogFile = "gateway_status_%s.log"
 	}
+	if cfg.Logging.DataLogFile == "" {
+		cfg.Logging.DataLogFile = "modbus_data_slog_%s.log"
+	}
 
 	for i := range cfg.Devices {
 		dev := &cfg.Devices[i]
@@ -99,7 +102,7 @@ func LoadConfig(filePath string) (*Config, error) {
 			dev.PollingIntervalMs = 1000
 		}
 		if dev.RegisterListFile == "" && dev.Enabled {
-			fmt.Printf("CẢNH BÁO: Thiết bị '%s' được kích hoạt nhưng thiếu 'register_list_file'.\n", dev.Name)
+			stlog.Printf("CẢNH BÁO: Thiết bị '%s' được kích hoạt nhưng thiếu 'register_list_file'.\n", dev.Name)
 		}
 	}
 	return &cfg, nil
@@ -138,7 +141,7 @@ func LoadRegistersFromCSV(filePath string) ([]RegisterInfo, error) {
 	for i, record := range records {
 		lineNumber := i + 2
 		if len(record) != len(header) {
-			fmt.Printf("Cảnh báo: File CSV '%s' dòng %d: số cột (%d) không khớp header (%d). Bỏ qua dòng.\n", filePath, lineNumber, len(record), len(header))
+			stlog.Printf("Cảnh báo: File CSV '%s' dòng %d: số cột (%d) không khớp header (%d). Bỏ qua dòng.\n", filePath, lineNumber, len(record), len(header))
 			continue
 		}
 
@@ -149,33 +152,27 @@ func LoadRegistersFromCSV(filePath string) ([]RegisterInfo, error) {
 		lenStr := strings.TrimSpace(record[colIndex["Length"]])
 
 		if reg.Name == "" || reg.Type == "" || addrStr == "" || lenStr == "" {
-			fmt.Printf("Cảnh báo: File CSV '%s' dòng %d: thiếu thông tin cột (Name, Address, Type, Length). Bỏ qua.\n", filePath, lineNumber)
+			stlog.Printf("Cảnh báo: File CSV '%s' dòng %d: thiếu thông tin cột (Name, Address, Type, Length). Bỏ qua.\n", filePath, lineNumber)
 			continue
 		}
 
 		addr, errA := strconv.ParseUint(addrStr, 10, 16)
 		if errA != nil {
-			fmt.Printf("Cảnh báo: File CSV '%s' dòng %d: Address '%s' không hợp lệ. Bỏ qua.\n", filePath, lineNumber, addrStr)
+			stlog.Printf("Cảnh báo: File CSV '%s' dòng %d: Address '%s' không hợp lệ. Bỏ qua.\n", filePath, lineNumber, addrStr)
 			continue
 		}
 		reg.Address = uint16(addr)
 
 		lenVal, errL := strconv.ParseUint(lenStr, 10, 16)
 		if errL != nil {
-			fmt.Printf("Cảnh báo: File CSV '%s' dòng %d: Length '%s' không hợp lệ. Bỏ qua.\n", filePath, lineNumber, lenStr)
+			stlog.Printf("Cảnh báo: File CSV '%s' dòng %d: Length '%s' không hợp lệ. Bỏ qua.\n", filePath, lineNumber, lenStr)
 			continue
 		}
 		reg.Length = uint16(lenVal)
 
-		// Gán Length=1 nếu là 0 cho các kiểu đơn giản
 		if reg.Length == 0 {
-			switch reg.Type {
-			case "FLOAT32", "INT32U", "INT32", "DATETIME", "INT64", "FLOAT64", "UTF8":
-				fmt.Printf("Cảnh báo: File CSV '%s' dòng %d: Length=0 không hợp lệ cho kiểu %s. Bỏ qua.\n", filePath, lineNumber, reg.Type)
-				continue
-			default:
-				reg.Length = 1
-			}
+			stlog.Printf("Cảnh báo: File CSV '%s' dòng %d: Length=0 không hợp lệ. Bỏ qua.\n", filePath, lineNumber)
+			continue
 		}
 		registers = append(registers, reg)
 	}
@@ -183,7 +180,7 @@ func LoadRegistersFromCSV(filePath string) ([]RegisterInfo, error) {
 	if len(registers) == 0 {
 		return nil, fmt.Errorf("không tìm thấy định nghĩa thanh ghi hợp lệ nào trong file CSV '%s'", filePath)
 	}
-	fmt.Printf("Đã đọc %d thanh ghi từ file '%s'\n", len(registers), filePath)
+	stlog.Printf("Đã đọc %d thanh ghi từ file '%s'\n", len(registers), filePath) // Dùng log chuẩn
 	return registers, nil
 }
 

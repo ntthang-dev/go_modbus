@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/binary"
 	"fmt"
+	"log/slog" // Sử dụng slog
 	"sync"
 	"time"
 
@@ -12,45 +13,42 @@ import (
 	"modbus_register_slave/config"
 
 	"github.com/goburrow/modbus"
-	"github.com/sirupsen/logrus"
 )
 
 // ModbusRequest đại diện cho một yêu cầu đọc/ghi Modbus
 type ModbusRequest struct {
-	SlaveID   byte
-	IsWrite   bool   // true nếu là ghi, false nếu là đọc
-	Address   uint16 // Địa chỉ bắt đầu (0-based)
-	Quantity  uint16 // Số lượng thanh ghi/coil
-	WriteData []byte // Dữ liệu cần ghi (cho lệnh ghi)
-	// *** THÊM: Function Code để xác định loại thao tác ***
-	FunctionCode int                 // Ví dụ: 3 (ReadHolding), 4 (ReadInput), 6 (WriteSingleReg), 16 (WriteMultiReg)...
-	ReplyChan    chan ModbusResponse // Channel để gửi trả kết quả
+	SlaveID      byte
+	FunctionCode int    // FC: 1, 2, 3, 4, 5, 6, 15, 16
+	Address      uint16 // Địa chỉ bắt đầu (0-based)
+	Quantity     uint16 // Số lượng thanh ghi/coil
+	WriteData    []byte // Dữ liệu cần ghi (cho lệnh ghi)
+	ReplyChan    chan ModbusResponse
 }
 
 // ModbusResponse chứa kết quả hoặc lỗi của một yêu cầu
 type ModbusResponse struct {
-	Result []byte // Dữ liệu đọc được hoặc phản hồi ghi
+	Result []byte
 	Err    error
 }
 
 // Manager quản lý một cổng COM vật lý duy nhất
 type Manager struct {
-	portName    string // Chỉ để logging
+	portName    string
 	portCfg     config.ConnectionConfig
 	handler     *modbus.RTUClientHandler
 	client      modbus.Client
 	requestChan chan ModbusRequest
-	log         *logrus.Entry
+	log         *slog.Logger // *** Đổi sang slog.Logger ***
 	mu          sync.Mutex
 }
 
 // NewManager tạo một Port Manager mới
-func NewManager(portCfg config.ConnectionConfig, statusLogger *logrus.Logger) *Manager {
-	logger := statusLogger.WithField("port", portCfg.Port)
+func NewManager(portCfg config.ConnectionConfig, statusLogger *slog.Logger) *Manager { // *** Nhận slog.Logger ***
+	logger := statusLogger.With(slog.String("port", portCfg.Port))
 	return &Manager{
 		portName:    portCfg.Port,
 		portCfg:     portCfg,
-		requestChan: make(chan ModbusRequest, 20), // Tăng buffer channel
+		requestChan: make(chan ModbusRequest, 20),
 		log:         logger,
 	}
 }
@@ -62,12 +60,11 @@ func (m *Manager) GetRequestChannel() chan<- ModbusRequest {
 
 // connect (internal) thực hiện kết nối hoặc kiểm tra kết nối
 func (m *Manager) connect() error {
-	m.mu.Lock() // Lock toàn bộ quá trình kiểm tra và kết nối
+	m.mu.Lock()
 	defer m.mu.Unlock()
-
 	if m.handler == nil {
 		windowsPortPath := m.portCfg.GetWindowsPortPath()
-		m.log.Infof("Khởi tạo handler cho %s", windowsPortPath)
+		m.log.Info("Khởi tạo handler", slog.String("path", windowsPortPath))
 		m.handler = modbus.NewRTUClientHandler(windowsPortPath)
 		m.handler.BaudRate = m.portCfg.BaudRate
 		m.handler.DataBits = m.portCfg.DataBits
@@ -75,23 +72,22 @@ func (m *Manager) connect() error {
 		m.handler.StopBits = m.portCfg.StopBits
 		m.handler.Timeout = m.portCfg.GetTimeout()
 	}
-
-	// Thử kết nối (hàm Connect của goburrow tự xử lý nếu đã kết nối)
+	m.log.Debug("Đang gọi handler.Connect()...")
 	err := m.handler.Connect()
 	if err != nil {
-		m.log.WithError(err).Error("PortManager: Kết nối thất bại")
-		// Đóng handler cũ nếu có lỗi để lần sau tạo lại
+		m.log.Error("Gọi handler.Connect() thất bại", slog.Any("error", err))
 		if m.handler != nil {
-			m.handler.Close() // Cố gắng đóng
+			m.handler.Close()
 			m.handler = nil
 		}
 		m.client = nil
 		return err
 	}
-
 	if m.client == nil {
+		m.log.Debug("Tạo modbus client mới.")
 		m.client = modbus.NewClient(m.handler)
 	}
+	m.log.Debug("Kết nối handler thành công hoặc đã kết nối.")
 	return nil
 }
 
@@ -102,7 +98,7 @@ func (m *Manager) Close() error {
 	if m.handler != nil {
 		m.log.Info("Đang đóng kết nối Port Manager...")
 		err := m.handler.Close()
-		m.handler = nil // Đặt lại để lần sau tạo mới
+		m.handler = nil
 		m.client = nil
 		return err
 	}
@@ -115,102 +111,122 @@ func (m *Manager) Run(ctx context.Context) {
 	defer m.log.Info("Port Manager đã dừng.")
 	defer m.Close()
 
-	// Thử kết nối lần đầu khi khởi động
-	if err := m.connect(); err != nil {
-		m.log.Warn("Port Manager: Kết nối ban đầu thất bại, sẽ thử lại khi có yêu cầu.")
-	}
-
 	for {
 		select {
 		case <-ctx.Done():
 			m.log.Info("Port Manager nhận tín hiệu dừng.")
 			return
 		case request := <-m.requestChan:
-			m.log.WithFields(logrus.Fields{
-				"slave_id": request.SlaveID, "fc": request.FunctionCode, "addr": request.Address, "qty": request.Quantity,
-			}).Debug("Port Manager nhận yêu cầu")
-
+			reqArgs := []any{ // Tạo slice any cho slog
+				slog.Uint64("slave_id", uint64(request.SlaveID)),
+				slog.Int("fc", request.FunctionCode),
+				slog.Uint64("addr", uint64(request.Address)),
+				slog.Uint64("qty", uint64(request.Quantity)),
+			}
+			m.log.Debug("Port Manager: Nhận yêu cầu", reqArgs...)
 			var response ModbusResponse
 
-			// --- Thực hiện giao dịch Modbus (cần lock) ---
+			// 1. Kiểm tra và thử kết nối lại nếu cần
 			m.mu.Lock()
-
-			// 1. Đảm bảo đã kết nối (thử lại nếu cần)
-			if m.client == nil {
+			clientIsNil := (m.client == nil)
+			m.mu.Unlock()
+			if clientIsNil {
+				m.log.Warn("Client đang nil, thử kết nối lại...")
 				if err := m.connect(); err != nil {
-					m.mu.Unlock()
-					response.Err = fmt.Errorf("Port Manager không thể kết nối: %w", err)
-					request.ReplyChan <- response
+					response.Err = fmt.Errorf("Port Manager không thể kết nối lại: %w", err)
+					m.log.Error("Gửi lỗi kết nối về cho client", slog.Any("error", response.Err))
+					select {
+					case request.ReplyChan <- response:
+					default:
+						m.log.Warn("Kênh phản hồi bị đầy khi gửi lỗi kết nối.", reqArgs...)
+					}
 					continue
 				}
+				m.log.Info("Kết nối lại thành công.")
 			}
 
-			// 2. Đặt đúng Slave ID
-			m.handler.SlaveId = request.SlaveID
+			// 2. Lock để thực hiện giao dịch
+			m.mu.Lock()
 
-			// 3. Thực hiện đọc hoặc ghi dựa trên Function Code
+			if m.client == nil { // Kiểm tra lại client sau khi connect
+				m.mu.Unlock()
+				response.Err = fmt.Errorf("Port Manager client vẫn là nil sau connect")
+				m.log.Error(response.Err.Error())
+				select {
+				case request.ReplyChan <- response:
+				default:
+					m.log.Warn("Kênh phản hồi bị đầy khi gửi lỗi client nil.", reqArgs...)
+				}
+				continue
+			}
+
+			m.handler.SlaveId = request.SlaveID
+			m.log.Debug("Bắt đầu thực hiện giao dịch Modbus...", reqArgs...)
+			startTime := time.Now()
+
+			// 3. Thực hiện đọc hoặc ghi
 			switch request.FunctionCode {
-			case 3: // Read Holding Registers
+			case 3:
 				response.Result, response.Err = m.client.ReadHoldingRegisters(request.Address, request.Quantity)
-			case 4: // Read Input Registers
-				response.Result, response.Err = m.client.ReadInputRegisters(request.Address, request.Quantity)
-			case 1: // Read Coils
+			case 1:
 				response.Result, response.Err = m.client.ReadCoils(request.Address, request.Quantity)
-			case 2: // Read Discrete Inputs
+			case 2:
 				response.Result, response.Err = m.client.ReadDiscreteInputs(request.Address, request.Quantity)
-			case 6: // Write Single Register
+			case 4:
+				response.Result, response.Err = m.client.ReadInputRegisters(request.Address, request.Quantity)
+			case 5:
+				if len(request.WriteData) == 2 {
+					value := binary.BigEndian.Uint16(request.WriteData)
+					response.Result, response.Err = m.client.WriteSingleCoil(request.Address, value)
+				} else {
+					response.Err = fmt.Errorf("FC05 yêu cầu đúng 2 bytes dữ liệu (0xFF00 hoặc 0x0000)")
+				}
+			case 6:
 				if len(request.WriteData) == 2 {
 					value := binary.BigEndian.Uint16(request.WriteData)
 					response.Result, response.Err = m.client.WriteSingleRegister(request.Address, value)
 				} else {
 					response.Err = fmt.Errorf("FC06 yêu cầu đúng 2 bytes dữ liệu")
 				}
-			case 16: // Write Multiple Registers
-				if len(request.WriteData) == int(request.Quantity)*2 {
-					response.Result, response.Err = m.client.WriteMultipleRegisters(request.Address, request.Quantity, request.WriteData)
-				} else {
-					response.Err = fmt.Errorf("FC16 yêu cầu %d bytes dữ liệu, nhận được %d", int(request.Quantity)*2, len(request.WriteData))
-				}
-			case 5: // Write Single Coil
-				if len(request.WriteData) == 2 { // Giá trị 0xFF00 hoặc 0x0000
-					value := binary.BigEndian.Uint16(request.WriteData)
-					response.Result, response.Err = m.client.WriteSingleCoil(request.Address, value)
-				} else {
-					response.Err = fmt.Errorf("FC05 yêu cầu đúng 2 bytes dữ liệu (0xFF00 hoặc 0x0000)")
-				}
-			case 15: // Write Multiple Coils
-				// Quantity ở đây là số lượng coil, WriteData chứa packed bits
+			case 15:
 				if len(request.WriteData) > 0 {
 					response.Result, response.Err = m.client.WriteMultipleCoils(request.Address, request.Quantity, request.WriteData)
 				} else {
 					response.Err = fmt.Errorf("FC15 yêu cầu dữ liệu coil (WriteData)")
 				}
+			case 16:
+				if len(request.WriteData) == int(request.Quantity)*2 {
+					response.Result, response.Err = m.client.WriteMultipleRegisters(request.Address, request.Quantity, request.WriteData)
+				} else {
+					response.Err = fmt.Errorf("FC16 yêu cầu %d bytes dữ liệu, nhận được %d", int(request.Quantity)*2, len(request.WriteData))
+				}
 			default:
-				response.Err = fmt.Errorf("function code %d không được hỗ trợ bởi Port Manager", request.FunctionCode)
+				response.Err = fmt.Errorf("function code %d không được hỗ trợ", request.FunctionCode)
+			}
+			duration := time.Since(startTime)
+			logAfterCallArgs := append(reqArgs, slog.Duration("duration", duration))
+
+			if response.Err != nil {
+				m.log.Error("Giao dịch Modbus thất bại", append(logAfterCallArgs, slog.Any("error", response.Err))...)
+			} else {
+				m.log.Debug("Giao dịch Modbus thành công", append(logAfterCallArgs, slog.Int("resp_len", len(response.Result)))...)
 			}
 
-			m.mu.Unlock() // Mở khóa sau giao dịch
+			m.mu.Unlock() // Mở khóa
 
 			// 4. Gửi phản hồi
-			if response.Err != nil {
-				m.log.WithError(response.Err).WithFields(logrus.Fields{
-					"slave_id": request.SlaveID, "fc": request.FunctionCode, "addr": request.Address, "qty": request.Quantity,
-				}).Error("Port Manager: Giao dịch Modbus thất bại")
-			} else {
-				m.log.WithFields(logrus.Fields{
-					"slave_id": request.SlaveID, "fc": request.FunctionCode, "addr": request.Address, "qty": request.Quantity, "resp_len": len(response.Result),
-				}).Debug("Port Manager: Giao dịch Modbus thành công")
-			}
-
-			// Gửi phản hồi không chặn, nếu kênh reply đầy thì bỏ qua (goroutine yêu cầu có thể đã timeout)
+			m.log.Debug("Chuẩn bị gửi phản hồi về replyChan...", reqArgs...)
 			select {
 			case request.ReplyChan <- response:
+				m.log.Debug("Đã gửi phản hồi thành công.", reqArgs...)
 			default:
-				m.log.Warnf("Kênh phản hồi cho yêu cầu (Slave %d, Addr %d) bị đầy hoặc không có người nhận.", request.SlaveID, request.Address)
+				m.log.Warn("Kênh phản hồi bị đầy hoặc không có người nhận.", reqArgs...)
 			}
 
-			// Delay nhỏ giữa các giao dịch trên cùng một bus
-			time.Sleep(30 * time.Millisecond) // Có thể điều chỉnh hoặc đưa vào config
+			// Delay nhỏ giữa các giao dịch
+			time.Sleep(5 * time.Millisecond)
 		}
 	}
 }
+
+// --- Xóa bỏ code thừa ---
